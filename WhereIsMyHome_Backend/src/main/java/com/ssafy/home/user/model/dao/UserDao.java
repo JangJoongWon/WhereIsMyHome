@@ -15,4 +15,8 @@ public interface UserDao {
 	int userModify(UserDto userDto);
 
 	int userDelete(String id);
+
+	String findById(String id);
+
+	Object getUser(String id);
 }

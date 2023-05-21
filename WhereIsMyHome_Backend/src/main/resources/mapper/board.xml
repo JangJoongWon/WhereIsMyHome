@@ -14,6 +14,14 @@
 		<result column="register_time" property="registerTime"/>
 	</resultMap>
 	
+	<resultMap type="memoDto" id="memo">
+		<result column="article_no" property="article_no"/>
+		<result column="id" property="id"/>
+		<result column="memo_no" property="memo_no"/>
+		<result column="comment" property="comment"/>
+		<result column="memo_time" property="memo_time"/>
+	</resultMap>
+	
 	<resultMap type="boardDto" id="viewArticle" extends="article">
 		<collection property="fileInfos" column="article_no" javaType="list" ofType="fileInfoDto" select="fileInfoList"/>
 	</resultMap>
@@ -102,5 +110,20 @@
 		delete from board
 		where article_no = #{articleNo}
 	</delete>
+	
+	<insert id="writeMemo" parameterType="memoDto">
+		insert into memo (memo_no, id, comment, memo_time, article_no)
+		values (#{memo_no}, #{id}, #{comment}, now(), #{article_no})
+		<selectKey resultType="int" keyProperty="article_no" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<select id="getMemo" parameterType="int" resultMap="memo">
+		select article_no, id, memo_no, comment, memo_time
+		from memo 
+		where article_no = #{article_no}
+		order by memo_time
+	</select>
 
 </mapper>

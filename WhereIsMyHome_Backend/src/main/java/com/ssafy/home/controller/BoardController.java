@@ -35,12 +35,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.home.board.model.BoardDto;
 import com.ssafy.home.board.model.FileInfoDto;
+import com.ssafy.home.board.model.MemoDto;
 import com.ssafy.home.board.model.service.BoardService;
 import com.ssafy.home.user.model.UserDto;
+
+import io.swagger.annotations.Api;
 
 @RestController
 @Controller
 @RequestMapping("/board")
+@Api("사용자 컨트롤러  API V1")
 public class BoardController {
 
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
@@ -53,25 +57,13 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-
-//	@GetMapping("/write")
-//	public String write(@RequestParam Map<String, String> map, Model model) {
-//		
-//		logger.debug("write call parameter {}", map);
-//		return "board/write";
-//	}
-
+	
 	@PostMapping("/write")
 	@ResponseBody
 	public ResponseEntity<?> write(@RequestBody BoardDto boardDto, HttpSession session,
 			RedirectAttributes redirectAttributes) throws Exception {
 		logger.debug("write boardDto : {}", boardDto.toString());
-
-		// 나중에 주석풀고 해결해야함
-		// UserDto userDto = (UserDto) session.getAttribute("logOK");
-		// boardDto.setId(userDto.getId());
-
-		boardDto.setId("admin"); // 얘는 주석 처리 해줘야 함
+		
 		return new ResponseEntity<Integer>(boardService.writeArticle(boardDto), HttpStatus.OK);
 
 	}
@@ -84,29 +76,50 @@ public class BoardController {
 		return entity;
 	}
 
+
+//	@GetMapping("/view/{articleno}")
+//	@ResponseBody
+//	public ResponseEntity<?> view(@PathVariable(value = "articleno") int articleNo) throws Exception {
+//
+//		logger.debug("view articleNo : {}", articleNo);
+//		
+//		boardService.updateHit(articleNo);
+//  
+//    		BoardDto boardDto = boardService.getArticle(articleNo);
+//            return new ResponseEntity<BoardDto>(boardDto, HttpStatus.OK);
+//            
+//       
+//	}
+	
 	
 	@GetMapping("/view/{articleno}")
 	@ResponseBody
-	public ResponseEntity<?> view(@PathVariable(value = "articleno") int articleNo,
-			@RequestParam(value = "map", required = false) Map<String, String> map, Model model) throws Exception {
+	public ResponseEntity<?> view(@PathVariable(value = "articleno") int articleNo) throws Exception {
 
 		logger.debug("view articleNo : {}", articleNo);
-
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
 		boardService.updateHit(articleNo);
-		return new ResponseEntity<BoardDto>(boardService.getArticle(articleNo), HttpStatus.OK);
-
+        try {
+            resultMap.put("message", "success");
+            List<MemoDto>memoList = boardService.getMemo(articleNo);
+    		BoardDto boardDto = boardService.getArticle(articleNo);	
+    		//System.out.println(memoList.size());
+    		resultMap.put("article",boardDto);
+    		resultMap.put("memos",memoList);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("message", "fail");
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
+        }
 	}
+	
 
-//	@GetMapping("/modify/{articleno}")
-//	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-//			throws Exception {
-//		logger.debug("modify articleNo : {}", articleNo);
-//		BoardDto boardDto = boardService.getArticle(articleNo);
-//		return "board/modify";
-//	}
-
-	@PutMapping("/modify/{articleno}")
-	public ResponseEntity<?> modify( BoardDto boardDto, @RequestParam Map<String, String> map,
+	@PutMapping
+	public ResponseEntity<?> modify(@RequestBody BoardDto boardDto,  @RequestParam(value = "map",required = false) Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
 		
 		logger.debug("modify boardDto : {}", boardDto);
@@ -116,7 +129,7 @@ public class BoardController {
 
 	
 	@DeleteMapping("/delete/{articleno}")
-	public ResponseEntity<?> delete(@RequestParam("articleno") int articleNo, @RequestParam(value = "map",required = false) Map<String, String> map,
+	public ResponseEntity<?> delete(@PathVariable(value = "articleno") int articleNo, @RequestParam(value = "map",required = false) Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
 		logger.debug("delete articleNo : {}", articleNo);
 		
@@ -143,5 +156,11 @@ public class BoardController {
 		fileInfo.put("sfile", sfile);
 		//return new ModelAndView("fileDownLoadView", "downloadFile", fileInfo);
 		return new ResponseEntity<Map>(fileInfo, HttpStatus.OK);
+	}
+	
+	@PostMapping("/view/{articleno}")
+	public ResponseEntity<?> writeMemo(@PathVariable(value = "articleno")int articleNo, @RequestBody MemoDto memoDto) throws Exception{
+		memoDto.setArticle_no(articleNo);
+		return new ResponseEntity<Integer>(boardService.writeMemo(memoDto), HttpStatus.OK);
 	}
 }

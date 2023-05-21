@@ -2,15 +2,20 @@ package com.ssafy.home.controller;
 
 import com.ssafy.home.user.model.UserDto;
 import com.ssafy.home.user.model.service.UserService;
+
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,42 +26,23 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/user")
 @CrossOrigin(origins = "http://localhost:8080")
+@Api("사용자 컨트롤러  API V1")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
 
-//logOK
-
-	@GetMapping("/login")
-	public String login() {
-		return "login/login";
-	}
-
 	@PostMapping("/login")
 	@ResponseBody
-	public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpSession session) throws Exception {
-		try {
-			ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.userLogin(userDto), HttpStatus.OK);
-
-			if (entity.getBody() != null)
-				session.setAttribute("logOK", entity.getBody());
-
-			return entity;
-		} catch (Exception e) {
-			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws Exception {
+		ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.userLogin(userDto), HttpStatus.OK);
+		return entity;
 	}
 
-	@GetMapping("/signup")
-	public String signup() {
-		return "user/signup";
-	}
 
-	@PostMapping("/signup")
+	@PostMapping("/register")
 	@ResponseBody
-	@Transactional
-	public ResponseEntity<?> signup(UserDto userDto) throws Exception{
+	public ResponseEntity<?> register(@RequestBody UserDto userDto) throws Exception{
 		try {
 			return new ResponseEntity<Integer>(userService.userEnroll(userDto), HttpStatus.OK);
 		}catch(Exception e) {
@@ -64,36 +50,38 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("logOK");
-		return "index";
+	@PostMapping("/findById")
+	public ResponseEntity<?> findById(@RequestBody String id) throws Exception {
+		String check = userService.findById(id);
+		if(check!=null) return new ResponseEntity<String>(check, HttpStatus.OK);
+		return new ResponseEntity<String>("NO", HttpStatus.OK);
 	}
-
-	@GetMapping("/mypage")
-	public String myPage() {
-		return "user/userInfo";
+	
+	@PostMapping("/getUser")
+	public ResponseEntity<?> getUser(@RequestBody String id) throws Exception {
+		
+		//0이거나 null이면 정상회원
+		if(userService.getUser(id)==null||(int)userService.getUser(id)==0) {
+			return new ResponseEntity<Integer>(0, HttpStatus.OK);
+		}
+		//1이면 탈퇴환 회원
+		else return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	}
+	
 
-	@PostMapping("/modify")
-	@ResponseBody
-	@Transactional
-	public ResponseEntity<?> modify(@RequestBody UserDto userDto, HttpSession session) throws Exception{
+	@PutMapping("/modify")
+	public ResponseEntity<?> modify(@RequestBody UserDto userDto) throws Exception{
 		try {
 			userService.userModify(userDto);
-			session.setAttribute("logOK", userDto);
 			return new ResponseEntity<Integer>(1, HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@GetMapping("/delete/{id}")
-	@ResponseBody
-	@Transactional
-	public ResponseEntity<?> delete(@PathVariable(value="id") String id, HttpSession session) throws Exception{
+	@PutMapping("/delete")
+	public ResponseEntity<?> delete(@RequestBody String id) throws Exception{
 		try {
-			session.invalidate();
 			return new ResponseEntity<Integer>(userService.userDelete(id), HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);

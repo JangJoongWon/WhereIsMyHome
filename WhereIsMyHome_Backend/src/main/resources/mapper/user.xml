@@ -26,8 +26,17 @@
 	</update>
 	
 	<delete id="userDelete" parameterType="String">
-		delete from users where id = #{id}
+		<!-- delete from users where id = ${id} -->
+		update users set valid = 1 where id = ${id}
 	</delete>
+	
+	<select id="findById" parameterType="String" resultType="String">
+		select pwd from users where id = ${id}
+	</select> 
+	
+	<select id="getUser" parameterType="String" resultType="Object">
+		select valid from users where id = ${id}
+	</select> 
 	
 	<!--
 	// TODO : 이부분 주석 해제하고 이름 맞춰서 잘 바꿔넣으시오

@@ -8,12 +8,15 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.home.board.model.BoardDto;
 import com.ssafy.home.board.model.FileInfoDto;
+import com.ssafy.home.board.model.MemoDto;
 
 @Mapper
 public interface BoardDao {
 	int writeArticle(BoardDto boardDto) throws SQLException;
-
+	
 	int registerFile(BoardDto boardDto) throws Exception;
+	
+	int writeMemo(BoardDto boardDto) throws Exception;
 
 	List<BoardDto> listArticle() throws SQLException;
 
@@ -30,4 +33,8 @@ public interface BoardDao {
 	int deleteArticle(int articleNo) throws SQLException;
 
 	List<FileInfoDto> fileInfoList(int articleNo) throws Exception;
+
+	int writeMemo(MemoDto memoDto)throws Exception;
+
+	List<MemoDto> getMemo(int articleNo)throws Exception;
 }

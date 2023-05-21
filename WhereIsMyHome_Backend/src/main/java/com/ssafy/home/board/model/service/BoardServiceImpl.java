@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.home.board.model.BoardDto;
 import com.ssafy.home.board.model.FileInfoDto;
+import com.ssafy.home.board.model.MemoDto;
 import com.ssafy.home.board.model.dao.BoardDao;
 import com.ssafy.home.util.PageNavigation;
 import com.ssafy.home.util.SizeConstant;
@@ -110,5 +111,15 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return 0;
 	}
+	
+	@Override
+	@Transactional
+	public Integer writeMemo(MemoDto memoDto)throws Exception {
+		return boardDao.writeMemo(memoDto);
+	}
 
+	@Override
+	public List<MemoDto> getMemo(int articleNo) throws Exception {
+		return boardDao.getMemo(articleNo);
+	}
 }

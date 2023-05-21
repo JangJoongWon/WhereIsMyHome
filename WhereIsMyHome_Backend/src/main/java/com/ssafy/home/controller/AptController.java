@@ -5,7 +5,6 @@ import com.ssafy.home.apt.model.AptDto;
 import com.ssafy.home.apt.model.service.AptService;
 import com.ssafy.home.dong.model.DongDto;
 import com.ssafy.home.dong.model.service.DongService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class AptController {
     
     @Autowired
     private DongService serviceDong;
-
+    
     @GetMapping("/search")
     public String aptSearch() throws Exception {
         return "content/search";
