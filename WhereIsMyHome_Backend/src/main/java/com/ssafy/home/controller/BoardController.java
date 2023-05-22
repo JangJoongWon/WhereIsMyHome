@@ -71,27 +71,25 @@ public class BoardController {
 	@GetMapping("/list")
 	@ResponseBody
 	public ResponseEntity<?> list() throws Exception {
-		ResponseEntity<List<BoardDto>> entity = new ResponseEntity<List<BoardDto>>(boardService.listArticle(),
-				HttpStatus.OK);
-		return entity;
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			resultMap.put("message", "success");
+			List<BoardDto>Adminboardlist = boardService.listAdminArticle();
+			List<BoardDto>boardlist = boardService.listArticle();
+			resultMap.put("boardlist", boardlist);
+			resultMap.put("adminboardlist", Adminboardlist);
+			System.out.println(boardlist.size());
+			System.out.println(Adminboardlist.size());
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+            resultMap.put("message", "fail");
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.NO_CONTENT);
+		}
 	}
 
 
-//	@GetMapping("/view/{articleno}")
-//	@ResponseBody
-//	public ResponseEntity<?> view(@PathVariable(value = "articleno") int articleNo) throws Exception {
-//
-//		logger.debug("view articleNo : {}", articleNo);
-//		
-//		boardService.updateHit(articleNo);
-//  
-//    		BoardDto boardDto = boardService.getArticle(articleNo);
-//            return new ResponseEntity<BoardDto>(boardDto, HttpStatus.OK);
-//            
-//       
-//	}
-	
-	
 	@GetMapping("/view/{articleno}")
 	@ResponseBody
 	public ResponseEntity<?> view(@PathVariable(value = "articleno") int articleNo) throws Exception {
@@ -99,7 +97,6 @@ public class BoardController {
 		logger.debug("view articleNo : {}", articleNo);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		
 		boardService.updateHit(articleNo);
         try {
             resultMap.put("message", "success");

@@ -19,5 +19,6 @@ public interface BoardService {
 	int deleteArticle(int articleNo, String path) throws Exception;
 	Integer writeMemo(MemoDto memoDto)throws Exception;
 	List<MemoDto> getMemo(int articleNo)throws Exception;
+	List<BoardDto> listAdminArticle()throws Exception;
 	
 }

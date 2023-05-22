@@ -122,4 +122,9 @@ public class BoardServiceImpl implements BoardService {
 	public List<MemoDto> getMemo(int articleNo) throws Exception {
 		return boardDao.getMemo(articleNo);
 	}
+
+	@Override
+	public List<BoardDto> listAdminArticle() throws Exception {
+		return boardDao.listAdminArticle();
+	}
 }
