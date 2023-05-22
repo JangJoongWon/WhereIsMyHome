@@ -20,9 +20,9 @@ const houseStore = {
     CLEAR_DONG_LIST(state) {
       state.dongs = [{ value: null, text: "동을 선택하세요" }];
     },
-    // CLEAR_HOUSE_LIST(state) {
-    //   state.houses = [];
-    // },
+    CLEAR_HOUSE_LIST(state) {
+      state.houses = [];
+    },
     CLEAR_HOUSE_DEAL(state) {
       state.houseDeals = [];
     },
