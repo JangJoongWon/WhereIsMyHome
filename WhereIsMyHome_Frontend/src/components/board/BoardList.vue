@@ -24,6 +24,7 @@
               <b-th>작성일</b-th>
             </b-tr>
           </b-thead>
+
           <tbody>
             <!-- 하위 component인 BoardListItem에 데이터 전달(props) -->
             <board-list-item
