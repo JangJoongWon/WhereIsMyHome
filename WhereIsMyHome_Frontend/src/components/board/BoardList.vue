@@ -30,6 +30,7 @@
               v-for="adarticle in adminArticles"
               :key="adarticle.articleno"
               v-bind="adarticle"
+              class="adarticle"
             />
             <board-list-item v-for="article in articles" :key="article.articleno" v-bind="article" />
           </tbody>
@@ -57,6 +58,7 @@ export default {
       articles: []
     };
   },
+
   created() {
     if (this.userInfo == null) {
       alert("로그인이 필요한 서비스 입니다");
@@ -95,5 +97,8 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: left;
+}
+.adarticle {
+  background-color: rgb(254, 221, 198);
 }
 </style>
