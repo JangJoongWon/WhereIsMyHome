@@ -26,6 +26,11 @@
           </b-thead>
           <tbody>
             <!-- 하위 component인 BoardListItem에 데이터 전달(props) -->
+            <board-list-item
+              v-for="adarticle in adminArticles"
+              :key="adarticle.articleno"
+              v-bind="adarticle"
+            />
             <board-list-item v-for="article in articles" :key="article.articleno" v-bind="article" />
           </tbody>
         </b-table-simple>
@@ -38,6 +43,8 @@
 <script>
 import { listArticle } from "@/api/board";
 import BoardListItem from "@/components/board/BoardListItems";
+import { mapState } from "vuex";
+const userStore = "userStore";
 
 export default {
   name: "BoardList",
@@ -46,22 +53,32 @@ export default {
   },
   data() {
     return {
+      adminArticles: [],
       articles: []
     };
   },
   created() {
-    //let param = {};
+    if (this.userInfo == null) {
+      alert("로그인이 필요한 서비스 입니다");
+      this.$router.push({ name: "login" });
+    }
 
     listArticle(
       // param,
       ({ data }) => {
-        this.articles = data;
+        this.articles = data.boardlist;
+        this.adminArticles = data.adminboardlist;
       },
       error => {
         console.log(error);
       }
     );
   },
+
+  computed: {
+    ...mapState(userStore, ["userInfo"])
+  },
+
   methods: {
     moveWrite() {
       this.$router.push({ name: "boardwrite" });

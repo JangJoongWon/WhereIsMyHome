@@ -62,11 +62,23 @@
 	<select id="listArticle" resultMap="article">
 		select b.article_no, b.id, b.subject, b.content, b.hit, b.register_time, u.name
 		from board b, users u 
-		where b.id = u.id
+		where b.id = u.id and u.id != 'admin'
 		<include refid="search"></include>
 		order by b.article_no desc
 		<!-- limit #{start}, #{listsize} -->
 	</select>
+	
+	
+	
+	<select id="listAdminArticle" resultMap="article">
+		select b.article_no, b.id, b.subject, b.content, b.hit, b.register_time, u.name
+		from board b, users u 
+		where b.id = u.id and u.id = 'admin'
+		<include refid="search"></include>
+		order by b.article_no desc
+		<!-- limit #{start}, #{listsize} -->
+	</select>
+	
 	
 	<select id="getTotalArticleCount" parameterType="map" resultType="int">
 		select count(article_no)

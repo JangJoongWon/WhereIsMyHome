@@ -1,4 +1,4 @@
-<template>
+<template >
   <b-tr>
     <b-td>{{ articleNo }}</b-td>
     <b-th class="text-left">
@@ -22,11 +22,6 @@ export default {
     hit: Number,
     registerTime: String
   }
-  //   filters: {
-  //     dateFormat(regtime) {
-  //       return moment(new Date(regtime)).format("YY.MM.DD");
-  //     }
-  //   }
 };
 </script>
 
