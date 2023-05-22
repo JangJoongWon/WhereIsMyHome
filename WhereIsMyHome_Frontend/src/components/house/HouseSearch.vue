@@ -39,24 +39,32 @@ export default {
   },
   created() {
     this.CLEAR_SIDO_LIST();
+    this.CLEAR_GUGUN_LIST();
+    this.CLEAR_DONG_LIST();
     this.getSido();
   },
   methods: {
     ...mapActions(houseStore, ["getSido", "getGugun", "getDong", "getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST"]),
+    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST", "CLEAR_HOUSE_LIST", "CLEAR_HOUSE_DEAL"]),
     gugunList() {
       this.CLEAR_GUGUN_LIST();
       this.CLEAR_DONG_LIST();
+      this.CLEAR_HOUSE_LIST();
+      this.CLEAR_HOUSE_DEAL();
       this.gugun = null;
       this.dong = null;
       if (this.sido) this.getGugun(this.sido);
     },
     dongList() {
       this.CLEAR_DONG_LIST();
+      this.CLEAR_HOUSE_LIST();
+      this.CLEAR_HOUSE_DEAL();
       this.dong = null;
       if (this.gugun) this.getDong(this.gugun);
     },
     searchHouse() {
+      this.CLEAR_HOUSE_LIST();
+      this.CLEAR_HOUSE_DEAL();
       if (this.dong) this.getHouseList({
         dongName: this.dong,
         gugunName: this.gugun,

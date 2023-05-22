@@ -1,6 +1,7 @@
 <template>
-  <div id="map">
-    
+  <div>
+    <div id="map"></div>
+    <div v-if="this.houses && this.houses.legnth == 0">아파트 정보가 없습니다.</div>
   </div>
 </template>
 
@@ -29,7 +30,15 @@ export default {
     watch: {
       houses() {
         if(this.houses && this.houses.length != 0) {
-          var moveLatLon = new window.kakao.maps.LatLng(this.houses[0].lat, this.houses[0].lng);
+          var sumLat = 0, sumLng = 0;
+          for(var idx3 = 0; idx3 < this.houses.length; idx3++) {
+            sumLat += this.houses[idx3].lat;
+            sumLng += this.houses[idx3].lng;
+          }
+          var centerLat = sumLat / this.houses.length;
+          var centerLng = sumLng / this.houses.length;
+
+          var moveLatLon = new window.kakao.maps.LatLng(centerLat, centerLng);
           this.map.setCenter(moveLatLon);
 
           var positions = [];
@@ -56,7 +65,8 @@ export default {
             const count = idx2;
             window.kakao.maps.event.addListener(marker, 'click', () => this.searchHouseDeal(count));
           }
-          
+        } else {
+          this.loadMap();
         }
       }
     },
