@@ -13,7 +13,7 @@
             <router-link to="/board">관심목록</router-link>
           </b-nav-item>
           <b-nav-item>
-            <router-link to="/house">부동산뉴스</router-link>
+            <router-link to="/news">부동산뉴스</router-link>
           </b-nav-item>
           <b-nav-item>
             <router-link to="/board">자유게시판</router-link>
