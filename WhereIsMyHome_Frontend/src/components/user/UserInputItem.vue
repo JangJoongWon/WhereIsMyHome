@@ -4,15 +4,27 @@
       <b-form @submit="onSubmit" @reset="onReset">
         <b-form-group id="id-group" label="아이디:" label-for="id" description="아이디를 입력하세요.">
           <span class="badge badge-danger mt-1" v-if="!available">동일한 아이디가 존재합니다</span>
-          <span class="badge mt-1" v-if="available">사용가능한 아이디입니다</span>
+          <span class="badge mt-1" v-if="available && user.id">사용가능한 아이디입니다</span>
           <b-form-input
             id="id"
-            :disabled="isUserid"
+            :disabled="true"
             v-model="user.id"
             type="text"
             required
-            placeholder="아이디 입력..."
+            :placeholder="userInfo.id"
             @keyup="checkVaild"
+            v-if="userInfo"
+          ></b-form-input>
+
+          <b-form-input
+            id="id"
+            :disabled="true"
+            v-model="user.id"
+            type="text"
+            required
+            placeholder="아이디를 입력하세요"
+            @keyup="checkVaild"
+            v-else
           ></b-form-input>
         </b-form-group>
 
@@ -26,7 +38,14 @@
         </b-form-group>
 
         <b-form-group id="name-group" label="이름:" label-for="subject" description="이름을 입력하세요.">
-          <b-form-input id="name" v-model="user.name" type="text" required placeholder="이름 입력..."></b-form-input>
+          <b-form-input
+            id="name"
+            v-model="user.name"
+            type="text"
+            :placeholder="userInfo.name"
+            v-if="userInfo"
+          ></b-form-input>
+          <b-form-input id="name" v-model="user.name" type="text" placeholder="이름 입력" v-else></b-form-input>
         </b-form-group>
 
         <b-form-group id="address-group" label="주소:" label-for="address" description="주소를 입력하세요.">
@@ -34,13 +53,26 @@
             id="content"
             v-model="user.address"
             type="text"
-            required
-            placeholder="주소 입력..."
+            :placeholder="userInfo.address"
+            v-if="userInfo"
+          ></b-form-input>
+          <b-form-input
+            id="content"
+            v-model="user.address"
+            type="text"
+            placeholder="주소를 입력하세요"
+            v-else
           ></b-form-input>
         </b-form-group>
-
         <b-form-group id="phone-group" label="전화번호:" label-for="content" description="전화번호를 입력하세요.">
-          <b-form-input id="content" v-model="user.phone" type="text" placeholder="전화번화 입력..."></b-form-input>
+          <b-form-input
+            id="content"
+            v-model="user.phone"
+            type="text"
+            :placeholder="userInfo.phone"
+            v-if="userInfo"
+          ></b-form-input>
+          <b-form-input id="content" v-model="user.phone" type="text" placeholder="전화번호 입력" v-else></b-form-input>
         </b-form-group>
 
         <b-button variant="primary" class="mr-1" @click="register" v-if="!userInfo">회원가입</b-button>

@@ -1,74 +1,53 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="secondary">
-      <b-navbar-brand>
-        <router-link to="/">
-          <b-img
-            :src="require('@/assets/house.png')"
-            id="logo"
-            class="d-inline-block align-top"
-            alt="logo"
-          ></b-img>
-        </router-link>
-      </b-navbar-brand>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <b-navbar-brand>
+      <router-link to="/">HomeGuys</router-link>
+    </b-navbar-brand>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <router-link to="/board" style="color:#999b9c;">관심목록</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/news" style="color:#999b9c;">부동산뉴스</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link to="/board" style="color:#999b9c;">자유게시판</router-link>
+        </li>
+      </ul>
+    </div>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <!-- after login -->
+    <b-navbar-nav class="ml-auto" v-if="userInfo">
+      <div class="collapse navbar-collapse" id="navbarText">
+        <li class="nav-item" style="text-align:center">
+          <b-avatar class="avatar" variant="primary"></b-avatar>
+          {{ userInfo.name }}({{ userInfo.id }})님 환영합니다.
+        </li>
+        <ul class="navbar-nav">
+          <li class="nav-item"></li>
+          <router-link :to="{ name: 'mypage' }" style="color:#999b9c;text-align: center;">내정보보기</router-link>
+        </ul>
+        <b-button
+          variant="danger"
+          class="nav-item"
+          @click.prevent="onClickLogout"
+          style="font-weight:bold;text-align: center; "
+        >로그아웃</b-button>
+      </div>
+    </b-navbar-nav>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item>
-            <router-link to="/board">관심목록</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="/news">부동산뉴스</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="/board">자유게시판</router-link>
-          </b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <!-- <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
-        </b-navbar-nav>-->
-
-        <!-- after login -->
-        <b-navbar-nav class="ml-auto" v-if="userInfo">
-          <b-nav-item class="align-self-center">
-            <b-avatar variant="primary"></b-avatar>
-            {{ userInfo.name }}({{ userInfo.id }})님 환영합니다.
-          </b-nav-item>
-          <b-nav-item class="align-self-center">
-            <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link>
-          </b-nav-item>
-          <b-nav-item class="align-self-center link" @click.prevent="onClickLogout">로그아웃</b-nav-item>
-        </b-navbar-nav>
-        <!-- before login -->
-        <b-navbar-nav class="ml-auto" v-else>
-          <b-nav-item-dropdown right>
-            <template #button-content>
-              <b-icon icon="people" font-scale="2"></b-icon>
-            </template>
-            <b-dropdown-item href="#">
-              <router-link :to="{ name: 'register' }" class="link">
-                <b-icon icon="person-circle"></b-icon>회원가입
-              </router-link>
-            </b-dropdown-item>
-            <b-dropdown-item href="#">
-              <router-link :to="{ name: 'login' }" class="link">
-                <b-icon icon="key"></b-icon>로그인
-              </router-link>
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
-  </div>
+    <!-- before login -->
+    <b-navbar-nav class="ml-auto" v-else>
+      <router-link :to="{ name: 'register' }" class="link" style="margin-right:20px">
+        <b-icon icon="person-circle"></b-icon>회원가입
+      </router-link>
+      <router-link :to="{ name: 'login' }" class="link">
+        <b-icon icon="key"></b-icon>로그인
+      </router-link>
+    </b-navbar-nav>
+  </nav>
 </template>
-
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -100,5 +79,17 @@ export default {
 
 .link {
   text-decoration: none;
+}
+.navbar.navbar-expand-lg.navbar-light.bg-light {
+  background-color: #e3f2fd !important;
+}
+.nav-item {
+  margin-left: 20px;
+}
+.avatar {
+  margin-top: 0%;
+}
+.ml-auto {
+  padding: 5px;
 }
 </style>
