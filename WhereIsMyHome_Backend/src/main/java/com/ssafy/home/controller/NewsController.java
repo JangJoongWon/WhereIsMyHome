@@ -66,7 +66,7 @@ public class NewsController {
 		 
 	}
 	
-	@Scheduled(cron="0 0 9 * * *") // 0초 0분 9시 매일 매월 매요일 자동 실행
+	@Scheduled(cron="0 0 9 * * *") 
 	@PostMapping("/")
 	public ResponseEntity<String> updateNews(){
 		logger.info("뉴스 추가");
@@ -83,12 +83,11 @@ public class NewsController {
 				newsDto.setLink(news.get("link").toString());
 				newsDto.setPostDate(news.get("pDate").toString());
 				newsList.add(newsDto);
-				System.out.println(newsDto);
 			}
 			newsService.updateNews(newsList);
 			return new ResponseEntity<String>(SUCCESS,HttpStatus.OK);
 		}catch(Exception e) {
-			e.printStackTrace();
+			e.hashCode();
 			return new ResponseEntity<String>(FAIL,HttpStatus.NO_CONTENT);
 		}
 	}

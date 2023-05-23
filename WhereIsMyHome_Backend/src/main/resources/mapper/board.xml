@@ -137,5 +137,16 @@
 		where article_no = #{article_no}
 		order by memo_time
 	</select>
+	
+	<update id="UpdateMemo" parameterType="memoDto">
+		update memo
+		set  id = #{id}, memo_time = now(), comment = #{comment}
+		where memo_no = #{memo_no}
+	</update>
+	
+	<delete id="DeleteMemo" parameterType="int">
+		delete from memo
+		where memo_no = #{memo_no}
+	</delete>
 
 </mapper>

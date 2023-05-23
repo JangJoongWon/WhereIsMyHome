@@ -1,8 +1,6 @@
 <template >
   <b-tr>
-    <b-th class="text-left">
-      <b-td>{{ title }}</b-td>
-    </b-th>
+    <b-td v-html="title"></b-td>
     <b-td>
       <a :href="link">{{ link }}</a>
     </b-td>

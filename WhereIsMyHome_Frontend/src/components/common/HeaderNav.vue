@@ -2,7 +2,14 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="secondary">
       <b-navbar-brand>
-        <router-link to="/">WhereIsMyHome</router-link>
+        <router-link to="/">
+          <b-img
+            :src="require('@/assets/house.png')"
+            id="logo"
+            class="d-inline-block align-top"
+            alt="logo"
+          ></b-img>
+        </router-link>
       </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
