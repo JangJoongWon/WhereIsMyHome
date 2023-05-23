@@ -38,6 +38,7 @@ import com.ssafy.home.board.model.FileInfoDto;
 import com.ssafy.home.board.model.MemoDto;
 import com.ssafy.home.board.model.service.BoardService;
 import com.ssafy.home.user.model.UserDto;
+import com.ssafy.home.util.PageNavigation;
 
 import io.swagger.annotations.Api;
 
@@ -70,17 +71,20 @@ public class BoardController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public ResponseEntity<?> list() throws Exception {
-		
+	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
+//		mav.addObject("pgno", map.get("pgno"));
+//		mav.addObject("key", map.get("key"));
+//		mav.addObject("word", map.get("word"));
+		logger.debug("list parameter pgno : {}", map.get("pgno"));
+		PageNavigation pageNavigation = boardService.makePageNavigation(map);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
 			resultMap.put("message", "success");
 			List<BoardDto>Adminboardlist = boardService.listAdminArticle();
-			List<BoardDto>boardlist = boardService.listArticle();
+			List<BoardDto>boardlist = boardService.listArticle(map);
 			resultMap.put("boardlist", boardlist);
 			resultMap.put("adminboardlist", Adminboardlist);
-			System.out.println(boardlist.size());
-			System.out.println(Adminboardlist.size());
+			resultMap.put("pageNavigation", pageNavigation);
 			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -160,4 +164,14 @@ public class BoardController {
 		memoDto.setArticle_no(articleNo);
 		return new ResponseEntity<Integer>(boardService.writeMemo(memoDto), HttpStatus.OK);
 	}
+	
+	//추후 구현
+	@PutMapping("/modifyMemo")
+	public ResponseEntity<?> modifyMemo(@RequestBody int memo_no) throws Exception{
+//		memoDto.setArticle_no(articleNo);
+//		return new ResponseEntity<Integer>(boardService.writeMemo(memoDto), HttpStatus.OK);
+		System.out.println(memo_no);
+		return null;
+	}
+	
 }

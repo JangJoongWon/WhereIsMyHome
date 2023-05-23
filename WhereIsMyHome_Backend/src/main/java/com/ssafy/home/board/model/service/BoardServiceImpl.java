@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ssafy.home.board.model.BoardDto;
 import com.ssafy.home.board.model.FileInfoDto;
@@ -21,7 +22,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private BoardDao boardDao;
-
+ 
 	@Override
 	@Transactional
 	public int writeArticle(BoardDto boardDto) throws Exception {
@@ -35,19 +36,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardDto> listArticle() throws Exception {
-//		Map<String, Object> param = new HashMap<String, Object>();
-//		String key = map.get("key");
-//		if("id".equals(key))
-//			key = "b.id";
-//		param.put("key", key == null ? "" : key);
-//		param.put("word", map.get("word") == null ? "" : map.get("word"));
-//		int pgNo = Integer.parseInt((map.get("pgno") == null||map.get("pgno") == "") ? "1" : map.get("pgno"));
-//		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
-//		param.put("start", start);
-//		param.put("listsize", SizeConstant.LIST_SIZE);
+	public List<BoardDto> listArticle(Map<String, String> map) throws Exception {
+		Map<String, Object> param = new HashMap<String, Object>();
+		String key = map.get("key");
+		if("id".equals(key))
+			key = "b.id";
+		param.put("key", key == null ? "" : key);
+		param.put("word", map.get("word") == null ? "" : map.get("word"));
+		int pgNo = Integer.parseInt((map.get("pgno") == null||map.get("pgno") == "") ? "1" : map.get("pgno"));
+		int start = pgNo * SizeConstant.LIST_SIZE - SizeConstant.LIST_SIZE;
+		param.put("start", start);
+		param.put("listsize", SizeConstant.LIST_SIZE);
 
-		return boardDao.listArticle();
+		return boardDao.listArticle(param);
 	}
 	
 	@Override
@@ -56,8 +57,8 @@ public class BoardServiceImpl implements BoardService {
 
 		int naviSize = SizeConstant.NAVIGATION_SIZE;
 		int sizePerPage = SizeConstant.LIST_SIZE;
-		//int currentPage = Integer.parseInt(map.get("pgno"));
-		int currentPage = 0;
+		int currentPage = Integer.parseInt(map.get("pgno"));
+		//int currentPage = 0;
 
 		pageNavigation.setCurrentPage(currentPage);
 		pageNavigation.setNaviSize(naviSize);
@@ -127,4 +128,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDto> listAdminArticle() throws Exception {
 		return boardDao.listAdminArticle();
 	}
+
+
 }
