@@ -2,8 +2,8 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-function listArticle(success, fail) {
-    api.get(`/board/list`).then(success).catch(fail);
+function listArticle(param,success, fail) {
+    api.get(`/board/list`, { params: param }).then(success).catch(fail);
   }
 
 function writeArticle(article, success, fail) {
@@ -27,4 +27,8 @@ function writeMemo(articleno, memo, success, fail) {
     api.post(`/board/view/${articleno}`, JSON.stringify(memo)).then(success).catch(fail);
 }
 
-export  { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle,writeMemo };
+function modifyMemo(memo_no, success, fail) { 
+  api.put(`/board/modifyMemo`, JSON.stringify(memo_no)).then(success).catch(fail);
+}
+
+export  { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle,writeMemo,modifyMemo };

@@ -24,6 +24,7 @@
               <b-th>작성일</b-th>
             </b-tr>
           </b-thead>
+
           <tbody>
             <!-- 하위 component인 BoardListItem에 데이터 전달(props) -->
             <board-list-item
@@ -32,12 +33,22 @@
               v-bind="adarticle"
               class="adarticle"
             />
-            <board-list-item v-for="article in articles" :key="article.articleno" v-bind="article" />
+
+            <board-list-item v-for="article in listP" :key="article.articleno" v-bind="article" />
           </tbody>
         </b-table-simple>
       </b-col>
       <!-- <b-col v-else class="text-center">도서 목록이 없습니다.</b-col> -->
     </b-row>
+    <div class="d-flex justify-content-center">
+      <b-pagination
+        class="paging"
+        v-model="currentPage"
+        :total-rows="pageNavigation.totalCount-adminArticles.length"
+        :per-page="perPage"
+        @change="pageClick"
+      ></b-pagination>
+    </div>
   </b-container>
 </template>
 
@@ -55,7 +66,11 @@ export default {
   data() {
     return {
       adminArticles: [],
-      articles: []
+      articles: [],
+      pageNavigation: [],
+      listP: [],
+      perPage: 5,
+      currentPage: 1
     };
   },
 
@@ -64,12 +79,20 @@ export default {
       alert("로그인이 필요한 서비스 입니다");
       this.$router.push({ name: "login" });
     }
+    let param = {
+      pgno: 1,
+      spp: 20,
+      key: null,
+      word: null
+    };
 
     listArticle(
-      // param,
+      param,
       ({ data }) => {
         this.articles = data.boardlist;
         this.adminArticles = data.adminboardlist;
+        this.pageNavigation = data.pageNavigation;
+        this.makePage(this.currentPage);
       },
       error => {
         console.log(error);
@@ -78,12 +101,32 @@ export default {
   },
 
   computed: {
-    ...mapState(userStore, ["userInfo"])
+    ...mapState(userStore, ["userInfo"]),
+    rows() {
+      return this.articles.length;
+    },
+
+    totalRows() {
+      console.log(this.pageNavigation.totalCount);
+      return this.pageNavigation.totalCount;
+    }
   },
 
   methods: {
     moveWrite() {
       this.$router.push({ name: "boardwrite" });
+    },
+
+    pageClick(page) {
+      this.currentPage = page;
+      this.makePage(this.currentPage);
+    },
+
+    makePage(pageNum) {
+      this.listP = this.articles.slice(
+        (pageNum - 1) * this.perPage,
+        pageNum * this.perPage
+      );
     }
   }
 };

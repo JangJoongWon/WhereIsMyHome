@@ -18,7 +18,7 @@ public interface BoardDao {
 	
 	int writeMemo(BoardDto boardDto) throws Exception;
 
-	List<BoardDto> listArticle() throws SQLException;
+	List<BoardDto> listArticle(Map<String, Object> map) throws SQLException;
 
 	int getTotalArticleCount(Map<String, Object> param) throws SQLException;
 
@@ -38,5 +38,5 @@ public interface BoardDao {
 
 	List<MemoDto> getMemo(int articleNo)throws Exception;
 
-	List<BoardDto> listAdminArticle()throws Exception;
+	List<BoardDto> listAdminArticle();
 }

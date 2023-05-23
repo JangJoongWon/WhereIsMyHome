@@ -44,31 +44,44 @@
       </b-col>
     </b-row>
 
+    <br />
+    <br />
+    <br />
+    <br />
+
     <b-card header="댓글 목록">
-      <div
-        v-for="memoItem in memoList"
-        :key="memoItem.id"
-      >댓글 작성자: {{ memoItem.id}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 댓글: {{ memoItem.comment }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 작성 시간: {{ memoItem.memo_time}}</div>
+      <div v-for="memoItem in memoList" :key="memoItem.id">
+        댓글 작성자: {{ memoItem.id}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 댓글: {{ memoItem.comment }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 작성시간: {{ memoItem.memo_time}}
+        <b-button variant="success" class="m-1" @click="modifyComment(memoItem.memo_no)">댓글수정</b-button>
+        <b-button variant="danger" class="m-1" @click="deleteComment">댓글삭제</b-button>
+      </div>
     </b-card>
 
-    <b-form>
-      <b-form-group id="memo-group" label="댓글:" label-for="memo">
-        <b-form-textarea
-          id="memo"
-          v-model="memo.comment"
-          placeholder="댓글을 입력하세요..."
-          rows="3"
-          max-rows="3"
-        ></b-form-textarea>
-      </b-form-group>
-      <b-button type="submit" variant="primary" class="m-1" @click="writeM">댓글작성</b-button>
-    </b-form>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <b-card header="댓글 작성">
+      <b-form>
+        <b-form-group id="memo-group" label-for="memo">
+          <b-form-textarea
+            id="memo"
+            v-model="memo.comment"
+            placeholder="댓글을 입력하세요..."
+            rows="3"
+            max-rows="3"
+          ></b-form-textarea>
+        </b-form-group>
+        <b-button variant="primary" class="m-1" @click="writeM">댓글작성</b-button>
+      </b-form>
+    </b-card>
   </b-container>
 </template>
 
 <script>
 // import moment from "moment";
-import { getArticle, writeMemo } from "@/api/board";
+import { getArticle, writeMemo, modifyMemo } from "@/api/board";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
@@ -79,6 +92,7 @@ export default {
     return {
       article: {},
       memo: {
+        memo_no: 0,
         id: "",
         comment: "",
         article_no: 0
@@ -134,7 +148,8 @@ export default {
       let memo = {
         id: this.userid,
         comment: this.memo.comment,
-        article_no: this.article.articleNo
+        article_no: this.article.articleNo,
+        memo_no: this.memo_no
       };
 
       let param = this.$route.params.articleNo;
@@ -146,6 +161,17 @@ export default {
           let msg = "댓글 등록에 실패했습니다";
           if (data == 1) {
             msg = "댓글 등록에 성공했습니다";
+            getArticle(
+              param,
+              ({ data }) => {
+                this.article = data.article;
+                this.memoList = data.memos;
+              },
+              error => {
+                console.log(error);
+              }
+            );
+            this.memo.comment = "";
           }
           alert(msg);
         },
@@ -153,7 +179,26 @@ export default {
           console.log(error);
         }
       );
-    }
+    },
+
+    modifyComment(memo_no) {
+      console.log(memo_no);
+      modifyMemo(
+        memo_no,
+        ({ data }) => {
+          let msg = "댓글 수정에 실패했습니다";
+          if (data == null) {
+            msg = "댓글 수정에 성공했습니다";
+          }
+          alert(msg);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
+
+    deleteComment() {}
   }
 };
 </script>

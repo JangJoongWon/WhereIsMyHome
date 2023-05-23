@@ -65,7 +65,7 @@
 		where b.id = u.id and u.id != 'admin'
 		<include refid="search"></include>
 		order by b.article_no desc
-		<!-- limit #{start}, #{listsize} -->
+		limit #{start}, #{listsize}
 	</select>
 	
 	

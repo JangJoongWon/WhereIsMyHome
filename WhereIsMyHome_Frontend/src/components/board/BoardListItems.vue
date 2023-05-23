@@ -15,6 +15,13 @@
 
 export default {
   name: "BoardListItems",
+  data() {
+    return {
+      perPage: 3,
+      currentPage: 1
+    };
+  },
+
   props: {
     articleNo: Number,
     id: String,
