@@ -4,8 +4,8 @@
     <div class="box01">
       <div class="container">
         <div class="part-1">아파트 실거래가 조회</div>
-        <div class="part-2">WhereIsMyHome?</div>
-        <div class="part-3">우리집처럼 느껴지는 편안한 서비스를 선보입니다.</div>
+        <div class="part-2">HomeGuys</div>
+        <div class="part-3">집이 없으신가요? 저희가 찾아드리죠</div>
         <div class="part-4">#아파트 #즐겨찾기 #뉴스 #주변정보 #정보 게시판</div>
         <div class="part-5">
           <router-link :to="{ name: 'house' }">아파트 보러가기</router-link>

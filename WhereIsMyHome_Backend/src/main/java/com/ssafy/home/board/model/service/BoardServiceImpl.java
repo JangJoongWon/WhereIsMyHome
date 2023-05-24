@@ -129,5 +129,15 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.listAdminArticle();
 	}
 
+	@Override
+	public Integer UpdateMemo(MemoDto memoDto) throws Exception {
+		return boardDao.UpdateMemo(memoDto);
+	}
+
+	@Override
+	public int DeleteMemo(int memo_no) throws Exception {
+		return boardDao.DeleteMemo(memo_no);
+	}
+
 
 }

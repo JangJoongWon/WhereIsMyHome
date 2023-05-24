@@ -23,6 +23,8 @@ public interface BoardService {
 	int deleteArticle(int articleNo, String path) throws Exception;
 	Integer writeMemo(MemoDto memoDto)throws Exception;
 	List<MemoDto> getMemo(int articleNo)throws Exception;
+	Integer UpdateMemo(MemoDto memoDto)throws Exception;
+	int DeleteMemo(int memo_no)throws Exception;
 	
 	
 }

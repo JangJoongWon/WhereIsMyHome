@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.home.news.model.dao.NewsDao">
+
+<resultMap type="NewsDto" id="news">
+		<result column="title" property="title"/>
+		<result column="context" property="context"/>
+		<result column="link" property="link"/>
+		<result column="postDate" property="postDate"/>
+</resultMap>
+
+<select id="getNews" resultMap="news">
+		SELECT *
+		FROM news
+</select>
+
+<insert id="updateNews" parameterType="NewsDto">
+		insert into news (title, context, link, postDate)
+		values
+		<foreach collection="newsList" item="newsinfo" separator=" , ">
+			(#{newsinfo.title}, #{newsinfo.context}, #{newsinfo.link}, now())
+		</foreach> 	
+</insert>
+
+
+</mapper>

@@ -72,9 +72,7 @@ public class BoardController {
 	@GetMapping("/list")
 	@ResponseBody
 	public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
-//		mav.addObject("pgno", map.get("pgno"));
-//		mav.addObject("key", map.get("key"));
-//		mav.addObject("word", map.get("word"));
+
 		logger.debug("list parameter pgno : {}", map.get("pgno"));
 		PageNavigation pageNavigation = boardService.makePageNavigation(map);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -101,7 +99,7 @@ public class BoardController {
 		logger.debug("view articleNo : {}", articleNo);
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		boardService.updateHit(articleNo);
+		//boardService.updateHit(articleNo);
         try {
             resultMap.put("message", "success");
             List<MemoDto>memoList = boardService.getMemo(articleNo);
@@ -118,7 +116,13 @@ public class BoardController {
         }
 	}
 	
-
+	@GetMapping("/updateHit/{articleno}")
+	@ResponseBody
+	public ResponseEntity<?> updateHit(@PathVariable(value = "articleno") int articleNo) throws Exception {
+		return new ResponseEntity<Integer>(boardService.updateHit(articleNo), HttpStatus.OK);
+	}
+	
+	
 	@PutMapping
 	public ResponseEntity<?> modify(@RequestBody BoardDto boardDto,  @RequestParam(value = "map",required = false) Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
@@ -165,13 +169,17 @@ public class BoardController {
 		return new ResponseEntity<Integer>(boardService.writeMemo(memoDto), HttpStatus.OK);
 	}
 	
-	//추후 구현
+	
 	@PutMapping("/modifyMemo")
-	public ResponseEntity<?> modifyMemo(@RequestBody int memo_no) throws Exception{
-//		memoDto.setArticle_no(articleNo);
-//		return new ResponseEntity<Integer>(boardService.writeMemo(memoDto), HttpStatus.OK);
-		System.out.println(memo_no);
-		return null;
+	public ResponseEntity<?> modifyMemo(@RequestBody MemoDto memoDto) throws Exception{
+		boardService.UpdateMemo(memoDto);
+		return new ResponseEntity<Integer>(1, HttpStatus.OK);
+	}
+	
+	@PostMapping("/deleteMemo")
+	public ResponseEntity<?> deleteMemo(@RequestBody int memo_no) throws Exception{
+		boardService.DeleteMemo(memo_no);
+		return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	}
 	
 }

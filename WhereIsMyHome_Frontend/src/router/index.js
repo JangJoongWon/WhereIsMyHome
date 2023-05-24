@@ -87,6 +87,14 @@ const routes = [
     name: "house",
     component: AppHouse,
   },
+
+  {
+    path: "/news",
+    name: "news",
+    component: () => import("@/components/news/NewsList"),
+  }
+
+
 ];
 
 const router = new VueRouter({

@@ -38,5 +38,9 @@ public interface BoardDao {
 
 	List<MemoDto> getMemo(int articleNo)throws Exception;
 
-	List<BoardDto> listAdminArticle();
+	List<BoardDto> listAdminArticle()throws Exception;
+
+	Integer UpdateMemo(MemoDto memoDto)throws Exception;
+
+	int DeleteMemo(int memo_no)throws Exception;
 }
