@@ -13,7 +13,7 @@ export default {
   name: "NewsListItems",
   props: {
     title: String,
-    Context: String,
+    context: String,
     link: String,
     postDate: String
   },

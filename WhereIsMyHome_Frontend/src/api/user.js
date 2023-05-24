@@ -9,6 +9,11 @@ async function login(user, success, fail) {
 
 //이메일로 비밀번호 찾기 
 async function findById(id, success, fail) {
+  await api.post(`/user/findById`, JSON.stringify(id)).then(success).catch(fail);
+}
+
+//이메일로 비밀번호 찾기 
+async function sendEmail(id, success, fail) {
   await api.post(`/user/sendEmail`, JSON.stringify(id)).then(success).catch(fail);
 }
 
@@ -33,5 +38,5 @@ async function getUser(id, success, fail) {
   await api.post(`/user/getUser`, JSON.stringify(id)).then(success).catch(fail);
 }
 
-export { login, findById, quitUser, modifyUser, registerUser, getUser };
+export { login, findById, quitUser, modifyUser, registerUser, getUser,sendEmail };
   
