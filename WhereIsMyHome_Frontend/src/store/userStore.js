@@ -5,7 +5,7 @@ import { login } from "@/api/user";
 const userStore = {
   namespaced: true,
   state: {
-    isLogin: false,
+    isLoginError: false,
     userInfo: null,
     userid:"",
   },
@@ -34,13 +34,11 @@ const userStore = {
         user,
         ({ data }) => {
           if (data.id) {
-            // console.log("login success token created!!!! >> ", accessToken, refreshToken);
             commit("SET_IS_LOGIN", true);
             commit("SET_IS_LOGIN_ERROR", false);
             commit("SET_USER_INFO", data);
             commit("SET_USER_ID", data.id);
             alert("로그인 성공");
-            
           } else {
             commit("SET_IS_LOGIN", false);
             commit("SET_IS_LOGIN_ERROR", true);
@@ -51,22 +49,6 @@ const userStore = {
         }
       );
     },
-    
-    // async getUserInfo({ commit, dispatch }) {
-    //   let decodeToken = jwtDecode(token);
-    //   // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
-    //   await findById(
-    //     decodeToken.userid,
-    //     ({ data }) => {
-    //       if (data.message === "success") {
-    //         commit("SET_USER_INFO", data.userInfo);
-    //         // console.log("3. getUserInfo data >> ", data);
-    //       } else {
-    //         console.log("유저 정보 없음!!!!");
-    //       }
-    //     },
-    //   );
-    // },
     
     async userLogout({ commit }) {
 

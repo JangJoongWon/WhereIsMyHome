@@ -42,8 +42,13 @@ public class UserController {
 	@PostMapping("/login")
 	@ResponseBody
 	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws Exception {
-		ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.userLogin(userDto), HttpStatus.OK);
-		return entity;
+		
+		UserDto userInfo =  userService.userLogin(userDto);
+		//ResponseEntity<UserDto> entity = new ResponseEntity<UserDto>(userService.userLogin(userDto), HttpStatus.OK);
+		
+		if(userInfo == null)return new ResponseEntity<UserDto>(userInfo, HttpStatus.NO_CONTENT);
+		else return new ResponseEntity<UserDto>(userInfo, HttpStatus.OK);
+
 	}
 
 

@@ -209,7 +209,6 @@ export default {
         findById(
           this.user.id,
           ({ data }) => {
-            console.log(data);
             if (data != "NO") {
               this.available = false;
             } else {

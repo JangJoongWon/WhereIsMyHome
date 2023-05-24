@@ -14,7 +14,7 @@
 	
 	
 	<select id="userLogin" parameterType="UserDto" resultType="UserDto">
-		select * from users where id = #{id} and pwd = #{pwd}
+		select * from users where id = #{id} and pwd = #{pwd} and valid = 0
 	</select> 
 	
 	<insert id="userEnroll" parameterType="UserDto">

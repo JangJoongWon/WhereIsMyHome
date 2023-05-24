@@ -5,7 +5,7 @@
         <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
             id="id"
-            :disabled="userInfo"
+            disabled
             v-model="article.id"
             type="text"
             required

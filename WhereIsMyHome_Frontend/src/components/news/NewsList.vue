@@ -21,7 +21,7 @@
 
           <tbody>
             <!-- 하위 component인 NewsListItem에 데이터 전달(props) -->
-            <news-list-items v-for="news in newses" :key="news.title" v-bind="news" class="news" />
+            <news-list-items v-for="news in newses" :key="news.link" v-bind="news" class="news" />
           </tbody>
         </b-table-simple>
       </b-col>
@@ -66,7 +66,6 @@ export default {
       listNews(
         ({ data }) => {
           this.newses = data.newsList;
-          console.log(data.newsList);
         },
         error => {
           console.log(error);

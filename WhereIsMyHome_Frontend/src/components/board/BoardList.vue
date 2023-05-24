@@ -69,7 +69,7 @@ export default {
       articles: [],
       pageNavigation: [],
       listP: [],
-      perPage: 5,
+      perPage: 8,
       currentPage: 1
     };
   },
