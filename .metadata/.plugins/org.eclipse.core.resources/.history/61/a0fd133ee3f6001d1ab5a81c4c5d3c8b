@@ -1,0 +1,20 @@
+package com.ssafy.home.apt.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AptDealDto {
+	private String no;
+	private String dealAmount;
+	private String dealYear;
+	private String dealMonth;
+	private String dealDay;
+	private String no;
+	private String no;
+	private String no;	
+}

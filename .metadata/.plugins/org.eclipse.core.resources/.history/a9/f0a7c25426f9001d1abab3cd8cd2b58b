@@ -1,0 +1,5 @@
+package com.ssafy.home.apt.model.dao;
+
+public class FavoriteDao {
+
+}

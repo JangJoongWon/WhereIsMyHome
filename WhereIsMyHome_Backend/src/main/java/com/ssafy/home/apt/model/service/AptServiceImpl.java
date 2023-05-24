@@ -3,7 +3,6 @@ package com.ssafy.home.apt.model.service;
 import com.ssafy.home.apt.model.AptDealDto;
 import com.ssafy.home.apt.model.AptDto;
 import com.ssafy.home.apt.model.dao.AptDao;
-import com.ssafy.home.dong.model.DongDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -3,6 +3,10 @@ import { sidoList, gugunList, dongList, houseList, houseDealList } from "@/api/h
 const houseStore = {
   namespaced: true,
   state: {
+    sido: "",
+    gugun: "",
+    dong: "",
+    apartmentName: "",
     sidos: [{ value: null, text: "시/도를 선택하세요" }],
     guguns: [{ value: null, text: "구/군을 선택하세요" }],
     dongs: [{ value: null, text: "동을 선택하세요" }],
@@ -11,6 +15,18 @@ const houseStore = {
   },
   getters: {},
   mutations: {
+    CLEAR_SIDO(state) {
+      state.sido = "";
+    },
+    CLEAR_GUGUN(state) {
+      state.gugun = "";
+    },
+    CLEAR_DONG(state) {
+      state.dong = "";
+    },
+    CLEAR_APTNAME(state) {
+      state.apartmentName = "";
+    },
     CLEAR_SIDO_LIST(state) {
       state.sidos = [{ value: null, text: "시/도를 선택하세요" }];
     },
@@ -25,6 +41,18 @@ const houseStore = {
     },
     CLEAR_HOUSE_DEAL(state) {
       state.houseDeals = [];
+    },
+    SET_SIDO(state, sido) {
+      state.sido = sido;
+    },
+    SET_GUGUN(state, gugun) {
+      state.gugun = gugun;
+    },
+    SET_DONG(state, dong) {
+      state.dong = dong;
+    },
+    SET_APTNAME(state, apartmentName) {
+      state.apartmentName = apartmentName;
     },
     SET_SIDO_LIST(state, sidos) {
       sidos.forEach((sido) => {
@@ -49,7 +77,7 @@ const houseStore = {
     },
   },
   actions: {
-    getSido: ({ commit }) => {
+    getSidos: ({ commit }) => {
       sidoList(
         ({ data }) => {
           commit("SET_SIDO_LIST", data);
@@ -59,7 +87,7 @@ const houseStore = {
         }
       );
     },
-    getGugun: ({ commit }, sido) => {
+    getGuguns: ({ commit }, sido) => {
       gugunList(
         sido,
         ({ data }) => {
@@ -70,7 +98,7 @@ const houseStore = {
         }
       );
     },
-    getDong: ({ commit }, gugun) => {
+    getDongs: ({ commit }, gugun) => {
       dongList(
         gugun,
         ({ data }) => {

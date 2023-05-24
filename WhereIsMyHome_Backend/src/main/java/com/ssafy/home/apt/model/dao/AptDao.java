@@ -2,7 +2,6 @@ package com.ssafy.home.apt.model.dao;
 
 import com.ssafy.home.apt.model.AptDealDto;
 import com.ssafy.home.apt.model.AptDto;
-import com.ssafy.home.dong.model.DongDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

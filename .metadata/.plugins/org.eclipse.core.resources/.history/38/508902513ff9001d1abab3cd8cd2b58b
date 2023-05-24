@@ -1,0 +1,7 @@
+package com.ssafy.home.apt.model.service;
+
+import com.ssafy.home.apt.model.FavoriteDto;
+
+public interface FavoriteService {
+	public int registFavorite(FavoriteDto favoriteDto);
+}

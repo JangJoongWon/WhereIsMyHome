@@ -1,0 +1,10 @@
+package com.ssafy.home.apt.model.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.ssafy.home.apt.model.FavoriteDto;
+
+@Mapper
+public interface FavoriteDao {
+	int registFavorite(FavoriteDto favoriteDto);
+}

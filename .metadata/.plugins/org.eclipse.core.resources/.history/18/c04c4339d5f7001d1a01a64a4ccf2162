@@ -1,0 +1,42 @@
+package com.ssafy.home.dong.model.service;
+
+<<<<<<< HEAD
+import com.ssafy.home.dong.model.DongDto;
+=======
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+import com.ssafy.home.dong.model.dao.DongDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class DongServiceImpl implements DongService {
+
+    @Autowired
+    private DongDao dongDao;
+
+    @Override
+    public List<String> getSido() {
+        return dongDao.getSido();
+    }
+
+    @Override
+    public List<String> getGugun(String sidoName) {
+        return dongDao.getGugun(sidoName);
+    }
+
+    @Override
+    public List<String> getDong(String gugunName) {
+        return dongDao.getDong(gugunName);
+    }
+<<<<<<< HEAD
+
+	@Override
+	public String getDongCode(DongDto dongDto) {
+		return dongDao.getDongCode(dongDto);
+	}
+	
+=======
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+}

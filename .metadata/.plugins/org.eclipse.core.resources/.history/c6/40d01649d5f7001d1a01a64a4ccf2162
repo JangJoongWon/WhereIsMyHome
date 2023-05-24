@@ -1,0 +1,28 @@
+package com.ssafy.home.user.model.service;
+
+<<<<<<< HEAD
+import org.springframework.stereotype.Service;
+=======
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+
+import com.ssafy.home.user.model.UserDto;
+
+
+public interface UserService {
+	
+	UserDto userLogin(UserDto userDto); // 로그인
+	
+	int userEnroll(UserDto userDto); // 회원가입
+	
+	int userModify(UserDto userDto); // 회원 정보 수정
+	
+	int userDelete(String id); // 회원탈퇴
+<<<<<<< HEAD
+=======
+
+	String findById(String id); //회원정보 찾기
+
+	Object getUser(String id); //탈퇴한 회원인지 확인
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+	
+}

@@ -1,0 +1,23 @@
+package com.ssafy.home.dong.model.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+
+<<<<<<< HEAD
+import com.ssafy.home.dong.model.DongDto;
+
+=======
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+import java.util.List;
+
+@Mapper
+public interface DongDao {
+
+    List<String> getSido();
+    List<String> getGugun(String sidoName);
+    List<String> getDong(String gugunName);
+<<<<<<< HEAD
+	String getDongCode(DongDto dongDto);
+	
+=======
+>>>>>>> 29231699c5f18d11fe38759c0a54c07d013de119
+}

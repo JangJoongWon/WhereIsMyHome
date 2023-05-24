@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AppBoard from "../views/AppBoard";
 import AppHouse from "../views/AppHouse";
+import AppFavorite from "../views/AppFavorite";
 
 Vue.use(VueRouter);
 
@@ -23,7 +24,7 @@ const routes = [
         name: "boardlist",
         component: () => import("@/components/board/BoardList"),
       },
-      
+
       {
         path: "write",
         name: "boardwrite",
@@ -41,8 +42,8 @@ const routes = [
         name: "boardmodify",
         component: () => import("@/components/board/BoardModify"),
       },
-     
-      { 
+
+      {
         path: "delete/:articleNo",
         name: "boarddelete",
         component: () => import("@/components/board/BoardDelete"),
@@ -86,6 +87,11 @@ const routes = [
     path: "/house",
     name: "house",
     component: AppHouse,
+  },
+  {
+    path: "/favorite",
+    name: "favorite",
+    component: AppFavorite,
   },
 ];
 
