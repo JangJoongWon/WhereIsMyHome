@@ -7,9 +7,9 @@ async function login(user, success, fail) {
   await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
 }
 
-//id로 비밀번호 찾기 
+//이메일로 비밀번호 찾기 
 async function findById(id, success, fail) {
-  await api.post(`/user/findById`, JSON.stringify(id)).then(success).catch(fail);
+  await api.post(`/user/sendEmail`, JSON.stringify(id)).then(success).catch(fail);
 }
 
 //회원 탈퇴

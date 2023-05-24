@@ -5,6 +5,7 @@ import com.ssafy.home.user.model.UserDto;
 
 public interface UserService {
 	
+
 	UserDto userLogin(UserDto userDto); // 로그인
 	
 	int userEnroll(UserDto userDto); // 회원가입
@@ -16,5 +17,9 @@ public interface UserService {
 	String findById(String id); //회원정보 찾기
 
 	Object getUser(String id); //탈퇴한 회원인지 확인
+
+	void mailSend(String id, String email, String pwd);
+
+	String getEmail(String id);
 	
 }

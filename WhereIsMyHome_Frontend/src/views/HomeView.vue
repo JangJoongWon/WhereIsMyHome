@@ -2,9 +2,13 @@
 <template>
   <div style="height: calc(100vh - 60px)">
     <div class="box01">
-      <div class="container">
+      <div class="container1">
         <div class="part-1">아파트 실거래가 조회</div>
-        <div class="part-2">HomeGuys</div>
+        <div class="part-2">
+          <img class="img" src="@/assets/logo.png" alt="My Image" />
+        </div>
+      </div>
+      <div class="container2">
         <div class="part-3">집이 없으신가요? 저희가 찾아드리죠</div>
         <div class="part-4">#아파트 #즐겨찾기 #뉴스 #주변정보 #정보 게시판</div>
         <div class="part-5">
@@ -39,19 +43,31 @@ export default {
   top: 0;
   left: 0;
   z-index: -1;
-  filter: brightness(50%);
+  filter: brightness(60%);
 }
-.container {
+.container1 {
   /* border: 1px solid red; */
-  justify-content: center;
-  align-items: center;
+  margin-bottom: 100px;
   width: 100%;
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
 }
+
+.container2 {
+  /* border: 1px solid red; */
+
+  margin-top: 100px;
+  width: 100%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 .right {
   width: 50%;
 }
@@ -86,5 +102,10 @@ a {
 a:hover {
   text-decoration: none;
   color: white;
+}
+
+img {
+  height: 250px;
+  width: 450px;
 }
 </style>

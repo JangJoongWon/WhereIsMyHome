@@ -13,7 +13,7 @@
       </b-col>
     </b-row>
     <b-row>
-      <b-col v-if="articles.length">
+      <b-col v-if="articles.length||adminArticles.length">
         <b-table-simple hover responsive>
           <b-thead head-variant="dark">
             <b-tr>

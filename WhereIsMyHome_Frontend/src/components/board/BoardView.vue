@@ -18,13 +18,13 @@
           size="sm"
           @click="moveModifyArticle"
           class="mr-2"
-          v-if="article.id == userid"
+          v-if="article.id == userid || userid == 'admin'"
         >글수정</b-button>
         <b-button
           variant="outline-danger"
           size="sm"
           @click="deleteArticle"
-          v-if="article.id == userid"
+          v-if="article.id == userid || userid == 'admin'"
         >글삭제</b-button>
       </b-col>
     </b-row>
@@ -49,7 +49,7 @@
         <div class="writer" style="display:inline-block">작성자: {{ memoItem.id}}</div>
         <div class="comment" style="display:inline-block">댓글: {{ memoItem.comment }}</div>
         <div class="time" style="display:inline-block">작성시간: {{ memoItem.memo_time}}</div>
-        <div v-if="memoItem.id == userid">
+        <div v-if="memoItem.id == userid||userid=='admin'">
           <b-button
             class="edit-button"
             size="sm"
@@ -214,7 +214,6 @@ export default {
         memo_no: this.memo_no
       };
 
-      console.log(memo.id);
       let param = this.$route.params.articleNo;
 
       modifyMemo(

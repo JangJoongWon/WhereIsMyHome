@@ -28,8 +28,8 @@
             </b-row>
             <b-row>
               <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">주소</b-col>
-              <b-col cols="4" align-self="start">{{ userInfo.address }}</b-col>
+              <b-col cols="2" align-self="end">이메일</b-col>
+              <b-col cols="4" align-self="start">{{ userInfo.email }}</b-col>
               <b-col cols="2"></b-col>
             </b-row>
             <b-row>
@@ -69,7 +69,7 @@ export default {
         id: "",
         pwd: "",
         name: "",
-        address: "",
+        email: "",
         phone: ""
       }
     };

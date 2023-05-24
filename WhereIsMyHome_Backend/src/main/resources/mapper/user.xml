@@ -8,7 +8,7 @@
 		<result column="id" property="id"/>
 		<result column="pwd" property="pwd"/>
 		<result column="name" property="name"/>
-		<result column="address" property="address"/>
+		<result column="email" property="email"/>
 		<result column="phone" property="phone"/>
 	</resultMap>
 	
@@ -18,11 +18,11 @@
 	</select> 
 	
 	<insert id="userEnroll" parameterType="UserDto">
-		insert into users (id, pwd, name, address, phone) values (#{id}, #{pwd}, #{name}, #{address}, #{phone})
+		insert into users (id, pwd, name, email, phone) values (#{id}, #{pwd}, #{name}, #{email}, #{phone})
 	</insert>
 	
 	<update id="userModify" parameterType="UserDto">
-		update users set id = #{id}, pwd = #{pwd}, name = #{name}, address = #{address}, phone = #{phone} where id = #{id}
+		update users set id = #{id}, pwd = #{pwd}, name = #{name}, email = #{email}, phone = #{phone} where id = #{id}
 	</update>
 	
 	<delete id="userDelete" parameterType="String">
@@ -37,5 +37,10 @@
 	<select id="getUser" parameterType="String" resultType="Object">
 		select valid from users where id = ${id}
 	</select> 
+	
+	<select id="getEmail" parameterType="String" resultType="String">
+		select email from users where id = ${id}
+	</select>
+	
 	
 </mapper>
