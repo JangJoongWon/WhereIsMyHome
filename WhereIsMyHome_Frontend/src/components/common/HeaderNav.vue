@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/board" style="color:#999b9c;">관심목록</router-link>
+          <router-link to="/favorite" style="color:#999b9c;">관심목록</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/news" style="color:#999b9c;">부동산뉴스</router-link>

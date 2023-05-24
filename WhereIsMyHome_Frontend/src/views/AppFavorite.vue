@@ -9,6 +9,7 @@
           <th>dongName</th>
           <th>apartmentName</th>
           <th>search</th>
+          <th>delete</th>
         </tr>
       </thead>
       <tbody>
@@ -18,7 +19,8 @@
           <td>{{ favorite.gugunName }}</td>
           <td>{{ favorite.dongName }}</td>
           <td>{{ favorite.apartmentName }}</td>
-          <button @click="moveHouse(index)">검색</button>
+          <td><button @click="moveHouse(index)">검색</button></td>
+          <td><button @click="delFavorite(index)">삭제</button></td>
         </tr>
       </tbody>
     </table>
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-import { getFavorites } from "@/api/favorite.js";
+import { getFavorites, deleteFavorites } from "@/api/favorite.js";
 import { mapState, mapActions, mapMutations } from "vuex";
 
 const houseStore = "houseStore";
@@ -76,6 +78,27 @@ export default {
         this.SET_DONG(this.favorites[index].dongName);
         this.SET_APTNAME(this.favorites[index].apartmentName);
       });
+    },
+    delFavorite(index) {
+      deleteFavorites({
+        aptCode: this.favorites[index].aptCode,
+        userid: this.userid,
+      },
+      ( response ) => {
+        console.log(response);
+        getFavorites(
+          this.userid,
+          ({ data }) => {
+            this.favorites = data;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      ( error ) => {
+        console.log(error);
+      })
     }
   },
 }

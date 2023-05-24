@@ -8,4 +8,5 @@ public interface FavoriteService {
 	public int registFavorite(FavoriteDto favoriteDto);
 	public List<FavoriteDto> listFavorite(String userid);
 	public Integer checkFavorite(FavoriteDto favoriteDto);
+	public void deleteFavorite(FavoriteDto favoriteDto);
 }

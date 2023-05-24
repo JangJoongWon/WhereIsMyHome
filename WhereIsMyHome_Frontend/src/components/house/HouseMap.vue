@@ -2,7 +2,7 @@
   <div>
     <div id="map"></div>
     <div v-if="this.dong">{{ this.sido }} {{ this.gugun }} {{ this.dong }} 입니다.</div>
-    <house-favorite-button v-if="this.markerIdx != null && this.houseDeals && this.houseDeals.length != 0" :houseIdx="markerIdx" :favoriteNum="favoriteNum"></house-favorite-button>
+    <house-favorite-button v-if="this.markerIdx != null && this.houseDeals && this.houseDeals.length != 0" :houseIdx="markerIdx"></house-favorite-button>
     <div v-if="this.apartmentName">{{ this.apartmentName }}의 검색 결과 입니다.</div>
     <div v-if="this.dong && this.houses && this.houses.length == 0">아파트 정보가 없습니다.</div>
   </div>
@@ -11,7 +11,6 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 import HouseFavoriteButton from "./HouseFavoriteButton.vue";
-import { checkFavorites } from "@/api/favorite.js";
 
 const houseStore = "houseStore";
 const userStore = "userStore";
@@ -22,7 +21,6 @@ export default {
     return {
       map: null,
       markerIdx: null,
-      favoriteNum: null,
     };
   },
   components: {
@@ -123,17 +121,6 @@ export default {
 
       this.getHouseDealList(this.houses[idx3].aptCode);
       this.markerIdx = idx3;
-
-      checkFavorites({
-        aptCode: this.houses[idx3].aptCode,
-        userid: this.userid,
-      },
-      ( response ) => {
-        this.favoriteNum = response.data;
-      },
-      ( error ) => {
-        console.log(error);
-      })
     },
   },
 }
