@@ -47,6 +47,7 @@
       </router-link>
     </b-navbar-nav>
   </nav>
+  
 </template>
 <script>
 import { mapState, mapGetters, mapActions } from "vuex";

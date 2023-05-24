@@ -2,6 +2,7 @@ package com.ssafy.home.controller;
 
 import com.ssafy.home.apt.model.AptDealDto;
 import com.ssafy.home.apt.model.AptDto;
+import com.ssafy.home.apt.model.FavoriteDto;
 import com.ssafy.home.apt.model.service.AptService;
 import com.ssafy.home.dong.model.DongDto;
 import com.ssafy.home.dong.model.service.DongService;
@@ -20,7 +21,7 @@ import java.util.List;
 public class AptController {
 
     @Autowired
-    private AptService service;
+    private AptService serviceApt;
     
     @Autowired
     private DongService serviceDong;
@@ -36,7 +37,7 @@ public class AptController {
         try {
         	String dongCode = serviceDong.getDongCode(dongDto);
         	
-            return new ResponseEntity<List<AptDto>>(service.getAptList(dongCode), HttpStatus.OK);
+            return new ResponseEntity<List<AptDto>>(serviceApt.getAptList(dongCode), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -47,10 +48,11 @@ public class AptController {
     @ResponseBody
     public ResponseEntity<?> aptDealSearch(@RequestBody String aptCode, Model model) throws Exception {
         try {
-            return new ResponseEntity<List<AptDealDto>>(service.getAptDealList(aptCode), HttpStatus.OK);
+            return new ResponseEntity<List<AptDealDto>>(serviceApt.getAptDealList(aptCode), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

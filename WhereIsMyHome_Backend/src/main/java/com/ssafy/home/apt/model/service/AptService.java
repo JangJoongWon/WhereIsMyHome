@@ -2,6 +2,7 @@ package com.ssafy.home.apt.model.service;
 
 import com.ssafy.home.apt.model.AptDealDto;
 import com.ssafy.home.apt.model.AptDto;
+import com.ssafy.home.apt.model.FavoriteDto;
 import com.ssafy.home.dong.model.DongDto;
 
 import java.util.List;

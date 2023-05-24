@@ -11,12 +11,6 @@
         <b-form-select v-model="dong" :options="dongs" @change="searchHouse"></b-form-select>
       </b-col>
     </b-row>
-
-    <div v-show="sido && gugun && dong">{{ sido }} {{ gugun }} {{ dong }} 입니다.</div>
-    
-    <!-- <tr v-for="house in houses" :key="house.aptCode">
-      <td>{{ house.apartmentName }}</td>
-    </tr> -->
   </div>
 </template>
 
@@ -41,37 +35,58 @@ export default {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_DONG_LIST();
-    this.getSido();
+    this.CLEAR_HOUSE_LIST();
+    this.CLEAR_HOUSE_DEAL();
+    this.getSidos();
   },
   methods: {
-    ...mapActions(houseStore, ["getSido", "getGugun", "getDong", "getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_DONG_LIST", "CLEAR_HOUSE_LIST", "CLEAR_HOUSE_DEAL"]),
+    ...mapActions(houseStore, ["getSidos", "getGuguns", "getDongs", "getHouseList"]),
+    ...mapMutations(houseStore, ["SET_SIDO", 
+                                "SET_GUGUN", 
+                                "SET_DONG", 
+                                "CLEAR_SIDO", 
+                                "CLEAR_GUGUN", 
+                                "CLEAR_DONG", 
+                                "CLEAR_APTNAME",
+                                "CLEAR_SIDO_LIST", 
+                                "CLEAR_GUGUN_LIST", 
+                                "CLEAR_DONG_LIST", 
+                                "CLEAR_HOUSE_LIST", 
+                                "CLEAR_HOUSE_DEAL"]),
     gugunList() {
+      this.CLEAR_GUGUN();
+      this.CLEAR_DONG();
+      this.gugun = null;
+      this.dong = null;
+      this.CLEAR_APTNAME();
       this.CLEAR_GUGUN_LIST();
       this.CLEAR_DONG_LIST();
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
-      this.gugun = null;
-      this.dong = null;
-      if (this.sido) this.getGugun(this.sido);
+      if (this.sido) this.getGuguns(this.sido);
     },
     dongList() {
+      this.CLEAR_DONG();
+      this.dong = null;
+      this.CLEAR_APTNAME();
       this.CLEAR_DONG_LIST();
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
-      this.dong = null;
-      if (this.gugun) this.getDong(this.gugun);
+      if (this.gugun) this.getDongs(this.gugun);
     },
     searchHouse() {
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
+      this.SET_SIDO(this.sido);
+      this.SET_GUGUN(this.gugun);
+      this.SET_DONG(this.dong);
       if (this.dong) this.getHouseList({
-        dongName: this.dong,
-        gugunName: this.gugun,
         sidoName: this.sido,
+        gugunName: this.gugun,
+        dongName: this.dong,
       });
     }
-  }
+  },
 }
 </script>
 
