@@ -1,7 +1,0 @@
-package com.ssafy.home.apt.model;
-
-public class FavoriteDto {
-	private String idx;
-	
-	private String aptCode;
-}
