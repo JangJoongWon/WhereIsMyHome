@@ -27,8 +27,16 @@ function writeMemo(articleno, memo, success, fail) {
     api.post(`/board/view/${articleno}`, JSON.stringify(memo)).then(success).catch(fail);
 }
 
-function modifyMemo(memo_no, success, fail) { 
-  api.put(`/board/modifyMemo`, JSON.stringify(memo_no)).then(success).catch(fail);
+function modifyMemo(memo, success, fail) { 
+  api.put(`/board/modifyMemo`, JSON.stringify(memo)).then(success).catch(fail);
 }
 
-export  { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle,writeMemo,modifyMemo };
+function deleteMemo(memo_no, success, fail) { 
+  api.post(`/board/deleteMemo`, JSON.stringify(memo_no)).then(success).catch(fail);
+}
+
+function updateHit(articleno, success, fail) { 
+  api.get(`/board/updateHit/${articleno}`).then(success).catch(fail);
+}
+
+export  { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle,writeMemo,modifyMemo, deleteMemo,updateHit };

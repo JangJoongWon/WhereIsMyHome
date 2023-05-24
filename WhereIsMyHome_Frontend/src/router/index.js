@@ -93,6 +93,12 @@ const routes = [
     name: "favorite",
     component: AppFavorite,
   },
+
+  {
+    path: "/news",
+    name: "news",
+    component: () => import("@/components/news/NewsList"),
+  }
 ];
 
 const router = new VueRouter({

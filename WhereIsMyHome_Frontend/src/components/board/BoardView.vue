@@ -44,23 +44,44 @@
       </b-col>
     </b-row>
 
-    <br />
-    <br />
-    <br />
-    <br />
-
     <b-card header="댓글 목록">
-      <div v-for="memoItem in memoList" :key="memoItem.id">
-        댓글 작성자: {{ memoItem.id}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 댓글: {{ memoItem.comment }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 작성시간: {{ memoItem.memo_time}}
-        <b-button variant="success" class="m-1" @click="modifyComment(memoItem.memo_no)">댓글수정</b-button>
-        <b-button variant="danger" class="m-1" @click="deleteComment">댓글삭제</b-button>
+      <div class="comment-line" v-for="memoItem in memoList" :key="memoItem.memo_no" style>
+        <div class="writer" style="display:inline-block">작성자: {{ memoItem.id}}</div>
+        <div class="comment" style="display:inline-block">댓글: {{ memoItem.comment }}</div>
+        <div class="time" style="display:inline-block">작성시간: {{ memoItem.memo_time}}</div>
+        <div v-if="memoItem.id == userid">
+          <b-button
+            class="edit-button"
+            size="sm"
+            variant="outline-success"
+            @click="ableInput(memoItem.memo_no)"
+            style="display:inline-block"
+          >댓글수정</b-button>
+          <b-button
+            class="delete-button"
+            size="sm"
+            variant="outline-danger"
+            @click="deleteComment(memoItem.memo_no)"
+            style="display:inline-block"
+          >댓글삭제</b-button>
+        </div>
+      </div>
+      <div v-show="commentMod" class="upMemo">
+        <b-form>
+          <b-form-group id="memo-group" label-for="memo">
+            <b-form-textarea
+              id="memo"
+              v-model="comment2"
+              placeholder="수정할 댓글을 입력하세요..."
+              rows="2"
+              max-rows="4"
+            ></b-form-textarea>
+          </b-form-group>
+          <b-button @click="modifyComment()" class="BUpButton">수정</b-button>
+          <b-button @click="UnableInput()">취소</b-button>
+        </b-form>
       </div>
     </b-card>
-
-    <br />
-    <br />
-    <br />
-    <br />
 
     <b-card header="댓글 작성">
       <b-form>
@@ -81,7 +102,7 @@
 
 <script>
 // import moment from "moment";
-import { getArticle, writeMemo, modifyMemo } from "@/api/board";
+import { getArticle, writeMemo, modifyMemo, deleteMemo } from "@/api/board";
 import { mapState } from "vuex";
 
 const userStore = "userStore";
@@ -97,7 +118,10 @@ export default {
         comment: "",
         article_no: 0
       },
-      memoList: []
+      memoList: [],
+      commentMod: false,
+      modifyMemoNum: 0,
+      comment2: ""
     };
   },
 
@@ -108,7 +132,6 @@ export default {
       ({ data }) => {
         this.article = data.article;
         this.memoList = data.memos;
-        console.log(this.memoList);
       },
       error => {
         console.log(error);
@@ -129,7 +152,6 @@ export default {
         name: "boardmodify",
         params: { articleNo: this.article.articleNo }
       });
-      //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
     deleteArticle() {
       if (confirm("정말로 삭제?")) {
@@ -181,14 +203,39 @@ export default {
       );
     },
 
-    modifyComment(memo_no) {
-      console.log(memo_no);
+    modifyComment() {
+      this.memo_no = this.modifyMemoNum;
+      this.memo.comment = this.comment2;
+
+      let memo = {
+        id: this.userid,
+        comment: this.memo.comment,
+        article_no: this.article.articleNo,
+        memo_no: this.memo_no
+      };
+
+      console.log(memo.id);
+      let param = this.$route.params.articleNo;
+
       modifyMemo(
-        memo_no,
+        memo,
         ({ data }) => {
           let msg = "댓글 수정에 실패했습니다";
-          if (data == null) {
+          if (data == 1) {
             msg = "댓글 수정에 성공했습니다";
+            getArticle(
+              param,
+              ({ data }) => {
+                this.article = data.article;
+                this.memoList = data.memos;
+              },
+              error => {
+                console.log(error);
+              }
+            );
+            this.memo.comment = "";
+            this.comment2 = "";
+            this.commentMod = false;
           }
           alert(msg);
         },
@@ -198,9 +245,63 @@ export default {
       );
     },
 
-    deleteComment() {}
+    ableInput(num) {
+      this.modifyMemoNum = num;
+      this.commentMod = true;
+    },
+
+    deleteComment(memo_no) {
+      let param = this.$route.params.articleNo;
+      confirm("댓글을 삭제하시겠습니까?");
+      deleteMemo(memo_no, ({ data }) => {
+        let msg = "댓글 삭제에 실패했습니다";
+        if (data == 1) {
+          msg = "댓글 삭제에 성공했습니다";
+          getArticle(
+            param,
+            ({ data }) => {
+              this.article = data.article;
+              this.memoList = data.memos;
+            },
+            error => {
+              console.log(error);
+            }
+          );
+          this.memo.comment = "";
+          this.comment2 = "";
+        }
+        alert(msg);
+      });
+    },
+    UnableInput() {
+      this.commentMod = false;
+    }
   }
 };
 </script>
 
-<style></style>
+<style scopred lang="css">
+.comment-line {
+  display: flex;
+  margin-bottom: 5px;
+}
+.writer {
+  width: 240px;
+  text-align: left;
+  margin-left: 50px;
+}
+.comment {
+  width: 300px;
+  text-align: left;
+}
+.time {
+  width: 300px;
+  text-align: left;
+}
+.upMemo {
+  margin-top: 50px;
+}
+.BUpButton {
+  margin-right: 10px;
+}
+</style>
