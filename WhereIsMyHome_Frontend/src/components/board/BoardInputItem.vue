@@ -2,14 +2,14 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group id="userid-group" label="작성자:" label-for="userid" description="작성자를 입력하세요.">
+        <b-form-group id="userid-group" label="작성자:" label-for="userid">
           <b-form-input
             id="id"
-            :disabled="isUserid"
+            :disabled="userInfo"
             v-model="article.id"
             type="text"
             required
-            placeholder="작성자 입력..."
+            :placeholder="userid"
           ></b-form-input>
         </b-form-group>
 
@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       article: {
-        articleNo: 0,
+        articleNo: this.article_no,
         id: "",
         subject: "",
         content: ""
@@ -61,17 +61,18 @@ export default {
   },
 
   computed: {
-    ...mapState(userStore, ["userInfo"])
+    ...mapState(userStore, ["userInfo", "userid"])
   },
 
   props: {
-    type: { type: String }
+    type: { type: String },
+    article_no: Number
   },
+
   created() {
     if (this.type === "modify") {
-      let param = this.$route.params.articleNo;
       getArticle(
-        param,
+        this.article.articleNo,
         ({ data }) => {
           this.article = data;
         },
@@ -88,10 +89,7 @@ export default {
 
       let err = true;
       let msg = "";
-      !this.article.id &&
-        ((msg = "작성자 입력해주세요"), (err = false), this.$refs.id.focus());
-      err &&
-        !this.article.subject &&
+      !this.article.subject &&
         ((msg = "제목 입력해주세요"),
         (err = false),
         this.$refs.subject.focus());
@@ -114,10 +112,11 @@ export default {
     },
     registArticle() {
       let param = {
-        id: this.article.id,
+        id: this.userid,
         subject: this.article.subject,
         content: this.article.content
       };
+
       writeArticle(
         param,
         ({ data }) => {
@@ -136,11 +135,11 @@ export default {
     modifyArticle() {
       let param = {
         articleNo: this.article.articleNo,
-        //나중에 user의 id를 가져와야한다
-        id: this.article.id,
+        id: this.userid,
         subject: this.article.subject,
         content: this.article.content
       };
+
       modifyArticle(
         param,
         ({ data }) => {

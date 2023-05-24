@@ -19,4 +19,6 @@ public interface UserDao {
 	String findById(String id);
 
 	Object getUser(String id);
+
+	String getEmail(String id);
 }

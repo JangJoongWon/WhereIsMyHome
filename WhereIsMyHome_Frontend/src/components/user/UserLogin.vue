@@ -80,9 +80,8 @@ export default {
       );
 
       await this.userConfirm(this.user);
-      // let userInfo = sessionStorage.getItem("userInfo");
+
       if (this.isLogin) {
-        // await this.getUserInfo(userInfo);
         this.$router.push({ name: "home" });
       }
     },
@@ -92,9 +91,8 @@ export default {
       findById(
         input,
         ({ data }) => {
-          if (data != "NO") {
-            const msg = data;
-            alert(`비밀번호: ${msg}`);
+          if (data == 1) {
+            alert("이메일로 비밀번호가 전송되었습니다");
           } else {
             alert("해당 아이디로 가입된 적이 없습니다");
           }

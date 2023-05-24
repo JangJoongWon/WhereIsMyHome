@@ -23,15 +23,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+
 @Controller
 @RequestMapping("/user")
 @CrossOrigin(origins = "http://localhost:8080")
 @Api("사용자 컨트롤러  API V1")
 public class UserController {
-
+	
+	
 	@Autowired
 	private UserService userService;
-
+	
+	
 	@PostMapping("/login")
 	@ResponseBody
 	public ResponseEntity<?> login(@RequestBody UserDto userDto) throws Exception {
@@ -87,4 +94,15 @@ public class UserController {
 			return new ResponseEntity<String>("서버 오류", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	@PostMapping("/sendEmail")
+	public ResponseEntity<?> sendEmail(@RequestBody String id)throws Exception{
+	    String email = userService.getEmail(id);
+	    String pwd = userService.findById(id);
+	    
+	    userService.mailSend(id, email,pwd);
+		return new ResponseEntity<Integer>(1, HttpStatus.OK);
+
+	}
+	
 }

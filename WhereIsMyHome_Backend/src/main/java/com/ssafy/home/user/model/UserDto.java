@@ -14,6 +14,7 @@ public class UserDto {
     String id;
     String pwd;
     String name;
-    String address;
+    String email;
     String phone;
+    
 }

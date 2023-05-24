@@ -18,7 +18,6 @@
 
           <b-form-input
             id="id"
-            :disabled="true"
             v-model="user.id"
             type="text"
             required
@@ -48,19 +47,19 @@
           <b-form-input id="name" v-model="user.name" type="text" placeholder="이름 입력" v-else></b-form-input>
         </b-form-group>
 
-        <b-form-group id="address-group" label="주소:" label-for="address" description="주소를 입력하세요.">
+        <b-form-group id="address-group" label="이메일:" label-for="address" description="이메일을 입력하세요.">
           <b-form-input
             id="content"
-            v-model="user.address"
+            v-model="user.email"
             type="text"
-            :placeholder="userInfo.address"
+            :placeholder="userInfo.email"
             v-if="userInfo"
           ></b-form-input>
           <b-form-input
             id="content"
-            v-model="user.address"
+            v-model="user.email"
             type="text"
-            placeholder="주소를 입력하세요"
+            placeholder="이메일을 입력하세요"
             v-else
           ></b-form-input>
         </b-form-group>
@@ -96,7 +95,7 @@ export default {
         id: "",
         pwd: "",
         name: "",
-        address: "",
+        email: "",
         phone: ""
       },
       isUserid: false,
@@ -130,8 +129,10 @@ export default {
         !this.user.name &&
         ((msg = "이름을 입력해주세요"), (err = false), this.$refs.name.focus());
       err &&
-        !this.user.address &&
-        ((msg = "주소를 입력해주세요"), (err = false), this.$refs.name.focus());
+        !this.user.email &&
+        ((msg = "이메일을 입력해주세요"),
+        (err = false),
+        this.$refs.name.focus());
       err &&
         !this.user.phone &&
         ((msg = "전화번호를 입력해주세요"),
@@ -146,7 +147,7 @@ export default {
       this.user.id = "";
       this.user.pwd = "";
       this.user.name = "";
-      this.user.address = "";
+      this.user.email = "";
       this.user.phone = "";
       this.moveList();
     },
@@ -157,7 +158,7 @@ export default {
         id: this.user.id,
         pwd: this.user.pwd,
         name: this.user.name,
-        address: this.user.address,
+        email: this.user.email,
         phone: this.user.phone
       };
       modifyUser(
@@ -182,7 +183,7 @@ export default {
         id: this.user.id,
         pwd: this.user.pwd,
         name: this.user.name,
-        address: this.user.address,
+        email: this.user.email,
         phone: this.user.phone
       };
 
