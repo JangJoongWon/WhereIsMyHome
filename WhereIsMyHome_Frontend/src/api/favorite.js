@@ -30,4 +30,16 @@ function checkFavorites(params, success, fail) {
     .catch(fail);
 }
 
-export { registFavorite, getFavorites, checkFavorites };
+function deleteFavorites(params, success, fail) {
+  api
+    .delete(`/favorite/delete`, {
+      params: {
+        aptCode: params.aptCode,
+        userid: params.userid,
+      },
+    })
+    .then(success)
+    .catch(fail);
+}
+
+export { registFavorite, getFavorites, checkFavorites, deleteFavorites };

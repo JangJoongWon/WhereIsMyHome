@@ -30,4 +30,8 @@
 		where aptCode = #{aptCode} and userid = #{userid}
 	</select>
 	
+	<delete id="deleteFavorite" parameterType="favoriteDto">
+		delete from favorites where idx >= 0 and aptCode=#{aptCode} and userid=#{userid}
+	</delete>
+	
 </mapper>

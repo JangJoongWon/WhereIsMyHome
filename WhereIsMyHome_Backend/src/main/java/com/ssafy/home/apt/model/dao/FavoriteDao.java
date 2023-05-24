@@ -11,4 +11,5 @@ public interface FavoriteDao {
 	int registFavorite(FavoriteDto favoriteDto);
 	List<FavoriteDto> listFavorite(String userid);
 	Integer checkFavorite(FavoriteDto favoriteDto);
+	void deleteFavorite(FavoriteDto favoriteDto);
 }
