@@ -6,9 +6,6 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/favorite" style="color:#999b9c;">관심목록</router-link>
-        </li>
-        <li class="nav-item">
           <router-link to="/news" style="color:#999b9c;">부동산뉴스</router-link>
         </li>
         <li class="nav-item">
@@ -16,6 +13,9 @@
         </li>
         <li class="nav-item">
           <router-link to="/house" style="color:#999b9c;">아파트정보</router-link>
+        </li>
+        <li class="nav-item" v-if="userInfo">
+          <router-link to="/favorite" style="color:#999b9c;">관심목록</router-link>
         </li>
       </ul>
     </div>

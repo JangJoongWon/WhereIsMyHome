@@ -1,10 +1,26 @@
 <template>
-  <div>
-    <div id="map"></div>
-    <div v-if="this.dong">{{ this.sido }} {{ this.gugun }} {{ this.dong }} 입니다.</div>
-    <house-favorite-button v-if="this.markerIdx != null && this.houseDeals && this.houseDeals.length != 0" :houseIdx="markerIdx"></house-favorite-button>
-    <div v-if="this.apartmentName">{{ this.apartmentName }}의 검색 결과 입니다.</div>
-    <div v-if="this.dong && this.houses && this.houses.length == 0">아파트 정보가 없습니다.</div>
+  <div class="housemap">
+    <div class="address" v-show="this.dong">
+      {{ this.sido }} {{ this.gugun }} {{ this.dong }}
+    </div>
+
+    <div id="map" style="font-size: 15px"/>
+
+    <house-favorite-button v-if="this.markerIdx != null && this.houseDeals && this.houseDeals.length != 0" :houseIdx="markerIdx" />
+
+    <b-icon v-if="this.dong && this.houseDeals && this.houseDeals.length != 0 && this.markerIdx == null" icon="star-fill" variant="warning" font-scale=2 />
+
+    <span v-if="this.markerIdx != null && this.dong && this.houseDeals && this.houseDeals.length != 0">
+      {{ this.houses[markerIdx].apartmentName }}
+    </span>
+
+    <span v-if="this.apartmentName">
+      {{ this.apartmentName }}
+    </span>
+
+    <span v-if="this.dong && this.houses && this.houses.length == 0">
+      아파트 정보가 없습니다.
+    </span>
   </div>
 </template>
 
@@ -91,6 +107,9 @@ export default {
     ...mapMutations(houseStore, ["CLEAR_SIDO", "CLEAR_GUGUN", "CLEAR_DONG", "CLEAR_APTNAME"]),
     loadMap() {
       const container = document.getElementById("map");
+      if(container == null) {
+        return;
+      }
       const options = {
         center: new window.kakao.maps.LatLng(33.450701, 126.570667),
         level: 3,
@@ -100,7 +119,7 @@ export default {
     },
     loadScript() {
       const script = document.createElement("script");
-      const APP_KEY = "35783ac070c2d51d48a95de3a0b6320f";
+      const APP_KEY = process.env.VUE_APP_KAKAO_KEY;
       script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${APP_KEY}&autoload=false`;
       script.onload = () => window.kakao.maps.load(this.loadMap);
 
@@ -128,7 +147,16 @@ export default {
 
 <style scoped>
 #map {
-  width: 100%;
+  width: 500px;
   height: 400px;
+}
+
+.address {
+  height: 40px;
+}
+
+.housemap {
+  font-weight: bold;
+  font-size: 20px;
 }
 </style>
