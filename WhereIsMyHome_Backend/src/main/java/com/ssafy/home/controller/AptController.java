@@ -1,11 +1,12 @@
 package com.ssafy.home.controller;
 
-import com.ssafy.home.apt.model.AptDealDto;
-import com.ssafy.home.apt.model.AptDto;
-import com.ssafy.home.apt.model.FavoriteDto;
-import com.ssafy.home.apt.model.service.AptService;
-import com.ssafy.home.dong.model.DongDto;
-import com.ssafy.home.dong.model.service.DongService;
+import com.ssafy.home.model.AptDealDto;
+import com.ssafy.home.model.AptDto;
+import com.ssafy.home.model.DongDto;
+import com.ssafy.home.model.FavoriteDto;
+import com.ssafy.home.service.AptService;
+import com.ssafy.home.service.DongService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

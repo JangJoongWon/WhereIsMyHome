@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.home.news.model.NewsDto;
-import com.ssafy.home.news.model.service.NewsService;
+import com.ssafy.home.model.NewsDto;
+import com.ssafy.home.service.NewsService;
 import com.ssafy.home.util.NaverSearch;
 
 import io.swagger.annotations.Api;

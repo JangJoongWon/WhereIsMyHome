@@ -1,7 +1,7 @@
 package com.ssafy.home.controller;
 
-import com.ssafy.home.user.model.UserDto;
-import com.ssafy.home.user.model.service.UserService;
+import com.ssafy.home.model.UserDto;
+import com.ssafy.home.service.UserService;
 
 import io.swagger.annotations.Api;
 
