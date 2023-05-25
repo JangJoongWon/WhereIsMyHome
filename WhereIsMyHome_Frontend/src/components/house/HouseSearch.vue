@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <b-row class="mt-4 mb-4 text-center">
-      <b-col class="sm-3">
-        <b-form-select v-model="sido" :options="sidos" @change="gugunList"></b-form-select>
-      </b-col>
-      <b-col class="sm-3">
-        <b-form-select v-model="gugun" :options="guguns" @change="dongList"></b-form-select>
-      </b-col>
-      <b-col class="sm-3">
-        <b-form-select v-model="dong" :options="dongs" @change="searchHouse"></b-form-select>
-      </b-col>
-    </b-row>
+  <div id="search">
+    <div id="search-box">
+      <div>지역 선택</div>
+      <b-row class="mt-4 mb-4 text-center">
+        <b-col class="sm-3">
+          <b-form-select v-model="sido" :options="sidos" @change="gugunList"></b-form-select>
+        </b-col>
+        <b-col class="sm-3">
+          <b-form-select v-model="gugun" :options="guguns" @change="dongList"></b-form-select>
+        </b-col>
+        <b-col class="sm-3">
+          <b-form-select v-model="dong" :options="dongs" @change="searchHouse"></b-form-select>
+        </b-col>
+      </b-row>
+    </div>
   </div>
 </template>
 
@@ -63,7 +66,10 @@ export default {
       this.CLEAR_DONG_LIST();
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
-      if (this.sido) this.getGuguns(this.sido);
+      if (this.sido) {
+        this.SET_SIDO(this.sido);
+        this.getGuguns(this.sido);
+      }
     },
     dongList() {
       this.CLEAR_DONG();
@@ -72,24 +78,47 @@ export default {
       this.CLEAR_DONG_LIST();
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
-      if (this.gugun) this.getDongs(this.gugun);
+      if (this.gugun) {
+        this.SET_GUGUN(this.gugun);
+        this.getDongs(this.gugun);
+      }
     },
     searchHouse() {
       this.CLEAR_HOUSE_LIST();
       this.CLEAR_HOUSE_DEAL();
-      this.SET_SIDO(this.sido);
-      this.SET_GUGUN(this.gugun);
-      this.SET_DONG(this.dong);
-      if (this.dong) this.getHouseList({
-        sidoName: this.sido,
-        gugunName: this.gugun,
-        dongName: this.dong,
-      });
+      if (this.dong) {
+        this.SET_DONG(this.dong);
+        this.getHouseList({
+          sidoName: this.sido,
+          gugunName: this.gugun,
+          dongName: this.dong,
+        });
+      }
     }
   },
 }
 </script>
 
 <style>
+#search {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
 
+#search-box {
+  width: 800px;
+  height: 100%;
+  padding: 0 50px;
+  border: 3px solid rgb(255, 222, 178);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+}
 </style>

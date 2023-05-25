@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <button v-if="isRegist == 0" @click="regist">'{{ this.houses[this.houseIdx].apartmentName }}'을(를) 관심목록으로 등록</button>
-    <div v-if="isRegist != 0">'{{ this.houses[this.houseIdx].apartmentName }}'을(를) 관심목록으로 등록되었음</div>
-  </div>
+  <span>
+    <b-icon v-if="isRegist==0" @click="regist" icon="star" variant="warning" font-scale=2></b-icon>
+    <b-icon v-if="isRegist!=0" @click="del" icon="star-fill" variant="warning" font-scale=2></b-icon>
+  </span>
 </template>
 
 <script>
-import { registFavorite, checkFavorites } from "@/api/favorite.js";
+import { registFavorite, getFavorites, checkFavorites, deleteFavorites } from "@/api/favorite.js";
 import { mapState } from "vuex";
 
 const houseStore = "houseStore";
@@ -64,6 +64,37 @@ export default {
       },
       ( response ) => {
         console.log(response);
+        checkFavorites({
+          aptCode: this.houses[this.houseIdx].aptCode,
+          userid: this.userid,
+        },
+        ( response ) => {
+          this.isRegist = response.data;
+        },
+        ( error ) => {
+          console.log(error);
+        })
+      },
+      ( error ) => {
+        console.log(error);
+      })
+    },
+    del() {
+      deleteFavorites({
+        aptCode: this.houses[this.houseIdx].aptCode,
+        userid: this.userid,
+      },
+      ( response ) => {
+        console.log(response);
+        getFavorites(
+          this.userid,
+          ({ data }) => {
+            this.favorites = data;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
         checkFavorites({
           aptCode: this.houses[this.houseIdx].aptCode,
           userid: this.userid,
