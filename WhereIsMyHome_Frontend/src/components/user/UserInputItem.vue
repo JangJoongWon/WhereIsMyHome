@@ -7,11 +7,10 @@
           <span class="badge mt-1" v-if="available && user.id">사용가능한 아이디입니다</span>
           <b-form-input
             id="id"
-            :disabled="true"
-            v-model="user.id"
             type="text"
             required
-            :placeholder="userInfo.id"
+            v-model="user.id"
+            :placeholder="userid"
             @keyup="checkVaild"
             v-if="userInfo"
           ></b-form-input>
@@ -106,10 +105,12 @@ export default {
     type: { type: String }
   },
 
-  created() {},
+  created() {
+    this.id = this.userid;
+  },
 
   computed: {
-    ...mapState(userStore, ["userInfo"])
+    ...mapState(userStore, ["userInfo", "userid"])
   },
 
   methods: {
@@ -153,14 +154,17 @@ export default {
     },
 
     ...mapActions(userStore, ["userModify"]),
-    async modify() {
+    modify() {
       let user = {
-        id: this.user.id,
+        id: this.userInfo.id,
         pwd: this.user.pwd,
         name: this.user.name,
         email: this.user.email,
         phone: this.user.phone
       };
+
+      user.id = this.userid;
+
       modifyUser(
         user,
         ({ data }) => {

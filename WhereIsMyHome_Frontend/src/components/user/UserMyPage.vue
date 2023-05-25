@@ -82,20 +82,23 @@ export default {
   methods: {
     ...mapActions(userStore, ["quit"]),
     quitUS() {
-      quitUser(
-        this.userInfo.id,
-        ({ data }) => {
-          let msg = "탈퇴 실패하였습니다";
-          if (data != null) {
-            msg = "탈퇴가 완료되었습니다.";
+      let out = confirm("탈퇴하시겠습니까?");
+      if (out == true) {
+        quitUser(
+          this.userInfo.id,
+          ({ data }) => {
+            let msg = "탈퇴 실패하였습니다";
+            if (data != null) {
+              msg = "탈퇴가 완료되었습니다.";
+            }
+            alert(msg);
+            this.quit();
+          },
+          error => {
+            console.log(error);
           }
-          alert(msg);
-          this.quit();
-        },
-        error => {
-          console.log(error);
-        }
-      );
+        );
+      }
     },
 
     moveModifyUser() {
