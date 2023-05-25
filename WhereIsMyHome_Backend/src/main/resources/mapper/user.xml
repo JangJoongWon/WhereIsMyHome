@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.home.user.model.dao.UserDao"><!--DAO의 경로를 넣으세요-->
+<mapper namespace="com.ssafy.home.mapper.UserDao"><!--DAO의 경로를 넣으세요-->
 	
 	<resultMap type="UserDto" id="user">
 		<result column="id" property="id"/>

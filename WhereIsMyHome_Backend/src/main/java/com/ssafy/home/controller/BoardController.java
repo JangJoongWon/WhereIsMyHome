@@ -33,11 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ssafy.home.board.model.BoardDto;
-import com.ssafy.home.board.model.FileInfoDto;
-import com.ssafy.home.board.model.MemoDto;
-import com.ssafy.home.board.model.service.BoardService;
-import com.ssafy.home.user.model.UserDto;
+import com.ssafy.home.model.BoardDto;
+import com.ssafy.home.model.MemoDto;
+import com.ssafy.home.model.UserDto;
+import com.ssafy.home.service.BoardService;
 import com.ssafy.home.util.PageNavigation;
 
 import io.swagger.annotations.Api;

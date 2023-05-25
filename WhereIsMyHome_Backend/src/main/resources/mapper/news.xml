@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="com.ssafy.home.news.model.dao.NewsDao">
+<mapper namespace="com.ssafy.home.mapper.NewsDao">
 
 <resultMap type="NewsDto" id="news">
 		<result column="title" property="title"/>

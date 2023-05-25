@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.home.apt.model.FavoriteDto;
-import com.ssafy.home.apt.model.service.FavoriteService;
+import com.ssafy.home.model.FavoriteDto;
+import com.ssafy.home.service.FavoriteService;
 
 @RestController
 @RequestMapping("/favorite")

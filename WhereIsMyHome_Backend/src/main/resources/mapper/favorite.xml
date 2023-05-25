@@ -2,7 +2,7 @@
 	<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.home.apt.model.dao.FavoriteDao">
+<mapper namespace="com.ssafy.home.mapper.FavoriteDao">
 
 	<resultMap type="favoriteDto" id="favorite">
 		<result column="idx" property="idx"/>
